@@ -68,6 +68,9 @@ type TGetJSXPropsProp<K> = {//K = 'div' ибо должно быть так - TG
   [N in K]: K[N] // перебрать ключи в ключе К, он же Div, и выдать их значения.
 }
 
+//или
+
+type TGetJSXPropsProp = Extract<JSX.IntrinsicElements, TDivElement> //но без <>
 
 
 
@@ -83,12 +86,6 @@ type TGetJSXPropsProp<K> = {//K = 'div' ибо должно быть так - TG
 
 
 
-
-
-// 2) ?
-type TGetJSXPropsProp<K> = {
-  [N in K]: K[N] extends THtmlDivPicked2 ? TGetJSXPropsProp<K[N]> : K[N];
-}
 
 
 const props:  TDivProps = {
