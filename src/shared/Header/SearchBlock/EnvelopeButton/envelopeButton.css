@@ -1,0 +1,42 @@
+.envelopeButton {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.envelopeButton * {
+    color: var(--grayC4);
+}
+
+.envelopeText {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    font-size: 9px;
+    line-height: 12px;
+    color: var(--white);
+    background-color: var(--orange);
+}
+
+.envelopeButton svg {
+    width: 12px;
+    height: 10px;
+}
+
+.envelopeButton:hover svg path {
+    fill: var(--orange);
+}
+
+@media all and (min-width: 1024px) {
+    .envelopeText {
+        width: 20px;
+        height: 20px;
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .envelopeButton svg {
+        width: 20px;
+        height: 16px;
+    }
+}

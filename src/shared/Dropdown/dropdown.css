@@ -1,0 +1,24 @@
+.container {/*максимально флюиден, не должен указывать свои строгие размеры*/
+    width: 100%;
+    flex: 1 1 0;
+}
+
+.listContainer {/*контейнер для списка*/
+    position: relative;/*держать список внутри себя*/
+}
+
+.list {/*сам список*/
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.closeButton {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+

@@ -1,0 +1,14 @@
+svg {
+    fill: none;
+}
+
+path {
+    fill-rule: evenodd;
+    clip-rule: evenodd;
+}
+
+.up path{
+    transform: rotate(180deg);
+    transform-origin: 50% 50%;
+}
+

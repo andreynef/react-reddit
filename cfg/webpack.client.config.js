@@ -1,9 +1,11 @@
 const path = require('path');
 const {HotModuleReplacementPlugin} = require('webpack'); //уже есть в вебпаке
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+
 const NODE_ENV = process.env.NODE_ENV;
-const IS_DEV = NODE_ENV =='development';
-const IS_PROD = NODE_ENV =='production';
+const IS_DEV = NODE_ENV ==='development';
+const IS_PROD = NODE_ENV ==='production';
+const GLOBAL_CSS_REGEXP = /\.global\.css$/;
 
 setupDevtool = () =>{
     if (IS_DEV) return 'eval';
@@ -31,24 +33,29 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.[tj]sx?$/,
+                test: /\.[jt]sx?$/,
                 use: ['ts-loader']//встраивание с пом него в бандл.
             },
             {
-                test: /\.less$/,
+                test: /\.css$/,//было less
                 use: [//действие справа налево, сначала less потом css потом style, потом сверху в бандл.
-                    'style-loader',
+                    'style-loader',//style
                     {
                         loader: 'css-loader',
                         options: {
-                            modules: {
+                            modules: {//все css файлы воспринимаются как модули
                                 mode: 'local',
                                 localIdentName: '[name]__[local]--[hash:base64:5]',//маркировка сгенерированных стилей
                             }
                         }
-                    },
-                    'less-loader',
+                    },//css
+                    'less-loader',//less
                 ],
+                exclude: GLOBAL_CSS_REGEXP // match all css files except GLOBAL_CSS_REGEXP и превращал их в css модули.
+            },
+            {
+                test: GLOBAL_CSS_REGEXP,// матчить только их. И тжсм сделать в серверной чести но без style
+                use: ["style-loader", "css-loader"]
             }
         ]
     },

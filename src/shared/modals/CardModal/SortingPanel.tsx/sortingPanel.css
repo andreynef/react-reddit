@@ -1,0 +1,43 @@
+.container {
+    display: flex;
+    flex-flow: row nowrap;
+    color: var(--gray99);
+    padding: 17px 0;
+    border-bottom: 1px solid var(--grayD9);
+    font-size: 14px;
+    margin: 0 0 40px 0;
+}
+
+.container span {
+    color: var(--orange);
+    font-size: 14px;
+    margin:  0 4px;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    outline-style: none;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+.button svg{
+    width: 13px;
+    height: 7px;
+    transform: rotate(180deg);
+}
+
+.button svg path{
+    fill: var(--orange);
+}
+
+.dropdown {
+    /*border-radius: 3px;*/
+    /*background-color: var(--white);*/
+    /*border: 1px solid red;*/
+    /*padding-top: 7px;*/
+    /*margin-top: -7px;*/
+}

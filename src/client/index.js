@@ -26,4 +26,4 @@ window.addEventListener('load', function () {
     //render удаляет всю разметку кот была до этого. А нужно чтобы реакт прикрепил текущ комп к уже нарисованной разметке, поэтому меняем render на hydrate
     ReactDOM.hydrate(React.createElement(Header_1.Header, null), document.getElementById('react_root'));
 });
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=index.ts.map

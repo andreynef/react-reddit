@@ -1,0 +1,37 @@
+.container {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.container p {
+    color: var(--black);
+    font-size: 14px;
+    line-height: 24px;
+    font-style: normal;
+    font-weight: normal;
+    margin: 0 0 27px 0;
+    padding: 27px 0 0 0;
+}
+
+.img2xContainer, .img3xContainer{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+.imgItem {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.imgItem img{
+    width:100%;
+    border-radius: 3px;
+    object-fit: cover;
+}
+
+.imgItem span{
+    font-size: 12px;
+    color: var(--gray99);
+    margin: 14px 0 0 0;
+}
