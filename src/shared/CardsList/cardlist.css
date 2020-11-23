@@ -1,0 +1,18 @@
+.cardList {
+    background-color: var(--grayF4);
+    position: relative;/*для FaceHmm абсолюта*/
+}
+@media all and (min-width: 1024px) {
+    .cardList{
+        padding: 20px 0 0 0;
+    }
+    .cardList {
+        background-color: var(--white);
+        border-radius: 7px;
+    }
+}
+@media all and (min-width: 1540px) {
+    .cardList{
+        padding: 48px 0;
+    }
+}

@@ -1,0 +1,67 @@
+.container {
+    display: flex;
+    flex-flow: column nowrap;
+    padding-bottom: 20px;/*сер поле между */
+}
+
+.searchGroup {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    background-color: var(--white);
+    border-radius: 0 0 7px 7px;
+    padding: 14px 20px;
+}
+
+.threadContainer {
+}
+
+.titleContainer {
+    padding: 40px 20px 15px 20px;
+}
+
+.navContainer {
+    /*align-items: center;*/
+    /*border-radius: 7px;*/
+}
+
+@media all and (min-width: 1024px) {
+    .container {
+        flex-flow: row nowrap;
+        padding: 40px 40px 15px 40px;
+        justify-content: space-between;
+    }
+
+    .searchGroup {
+        background-color: unset;
+        border-radius: unset;
+        padding: 0;
+        flex-direction: row-reverse;/*развернуть положение*/
+        align-items: center;
+    }
+
+    .threadContainer {
+        display: flex;
+        align-items: center;
+        flex-flow: row nowrap;
+        padding: 0;
+        order: -1;
+    }
+
+    .titleContainer {
+        padding: 0;
+    }
+
+    .navContainer *{/*все что в этом контейнере*/
+        background-color: unset;
+        font-size: 20px;
+    }
+
+}
+
+@media all and (min-width: 1540px){
+    .container {
+        padding: 70px 0;
+    }
+
+}

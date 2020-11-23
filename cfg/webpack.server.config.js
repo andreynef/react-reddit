@@ -1,6 +1,8 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');//удалить из сервера лишние модули из папки node-modules, тк эта папка и так будет установлена в проекте.
 const NODE_ENV = process.env.NODE_ENV;
+const GLOBAL_CSS_REGEXP = /\.global\.сss$/;
+
 
 module.exports = {
     target: "node",
@@ -17,11 +19,11 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.[tj]sx?$/,
+                test: /\.[jt]sx?$/,
                 use: ['ts-loader']
             },
             {
-                test: /\.less$/,
+                test: /\.css$/,//было лесс
                 use: [
                     {
                         loader: 'css-loader',
@@ -29,12 +31,18 @@ module.exports = {
                             modules: {
                                 mode: 'local',
                                 localIdentName: '[name]__[local]--[hash:base64:5]',
+                                // exportOnlyLocals: true,//fix
                             },
                             onlyLocals: true,//чтобы лоадер не собирал глобальные стили на сервере. На сервере стили не нужны, главное только селекторы.
                         }
                     },
                 'less-loader',
                 ],
+                exclude: GLOBAL_CSS_REGEXP,
+            },
+            {
+                test: GLOBAL_CSS_REGEXP,
+                use: ["сss-loader"]
             }
         ]
     },

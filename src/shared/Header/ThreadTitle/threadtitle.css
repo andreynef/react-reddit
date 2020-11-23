@@ -1,0 +1,14 @@
+.threadTitle {
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 23px;
+    margin: 0;/*h1 reset*/
+    padding: 0;/*h1 reset*/
+}
+
+@media all and (min-width: 1024px) {
+    .threadTitle {
+        font-size: 28px;
+        line-height: 33px;
+    }
+}

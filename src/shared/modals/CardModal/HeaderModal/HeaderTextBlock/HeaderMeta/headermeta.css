@@ -1,0 +1,40 @@
+.headerMetaContainer {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.nameContainer {
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+}
+
+.avaNameContainer:hover {
+    cursor: pointer;
+}
+
+.avatarImg {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.name {
+    color: var(--orange);
+}
+
+.publishedAgoText {
+    margin-right: 8px;
+    color: var(--gray99);
+}
+
+
+.theme {
+    background-color: var(--grayD9);
+    color: var(--black);
+    line-height: 22px;
+    padding: 0 11px;
+    /*margin: 0 0 0 18px;*/
+}

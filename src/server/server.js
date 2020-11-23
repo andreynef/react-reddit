@@ -1,7 +1,7 @@
 import express from 'express';
 import ReactDOM from 'react-dom/server';
-import { Header } from '../shared/Header';
 import { indexHtmlTemplate } from './indexHtmlTemplate';
+import {App} from "../App";
 
 const app = express();//инициализация. Теперь app это instance нашего приложения
 
@@ -9,9 +9,9 @@ app.use('/static', express.static('./dist/client'));//спец роут кот �
 
 app.get('/', (req,res) =>{
     res.send(
-        indexHtmlTemplate(ReactDOM.renderToString(Header())),
+        indexHtmlTemplate(ReactDOM.renderToString(App())),
     );
 });
 app.listen(3000, ()=>{
-    console.log('server started on http://localhost:3000');
+    console.log('file server.js is speaking : "Server started on http://localhost:3000"');
 });
