@@ -1,4 +1,4 @@
-// ф кот возвращает ф возвращающая обьект с доп ключом со значением value. [key]: value.
+// ф кот возвращает обьект с доп ключом со значением value. assoc('key', value)(obj)
 
 export function assoc<K extends string, T>(key:K, value:T) {
   return <O extends object>(obj: O) => (

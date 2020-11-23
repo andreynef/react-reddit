@@ -3,6 +3,7 @@ import styles from './cardlist.css';
 import {Card} from "./Card";
 import {EmptyCard} from "./EmptyCard";
 import {FaceHmm} from "./FaceHmm";
+import {GenericList} from "../../utils/react/GenericList";
 
 interface ICardListProps {
   openedThread: string;
@@ -34,6 +35,7 @@ export function CardList({bookmark, openedThread, list}:ICardListProps) {
       </ul>
 
   } else {
+    // allCards= <GenericList list={list} />;
     allCards = list.map((item, i) =>
         <Card
           key={item.id}
@@ -43,7 +45,6 @@ export function CardList({bookmark, openedThread, list}:ICardListProps) {
         />
     )
   }
-
   return (
     <ul className={styles.cardList}>
       {allCards}

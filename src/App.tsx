@@ -4,7 +4,7 @@ import {hot} from "react-hot-loader/root";
 import {Layout} from "./shared/Layout";
 import {Content} from "./shared/Content";
 import {CardList} from "./shared/CardsList";
-import {addRandomId} from "./utils/react/generateRandomId";
+import {addRandomId, generateRandomString} from "./utils/react/generateRandomId";
 import {Menu} from "./shared/CardsList/Card/CardHeader/Menu";
 import {Text} from "./shared/Text";
 import {Break} from "./shared/Break";
@@ -22,6 +22,7 @@ import {Dropdown} from "./shared/Dropdown";
 import {UseEffectTestComponent} from "./shared/UseEffectTestComponent";
 import {getValue} from "./utils/react/pickFromSyntheticEvent";
 import {MyHooksUseEffectComponent} from "./myHooks/useIsMounted";
+import {assoc} from "./utils/js/assoc";
 
 //Прога по генерации шаблонов компонент (установка: npm install -g yo generator-react-ts-component-dir):
 //В консоли набрать: yo react-ts-component-dir BLABLAComp ./src/shared. Пример 'yo react-ts-component-dir [component_name] [path] [--styles] [--less] [--sass]'
