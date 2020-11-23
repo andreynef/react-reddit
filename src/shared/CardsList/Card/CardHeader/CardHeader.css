@@ -1,4 +1,4 @@
-.textContentContainer {
+.cardHeaderContainer {
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-evenly;
@@ -33,7 +33,7 @@
 }
 
 @media all and (min-width: 1024px) {
-    .textContentContainer {
+    .cardHeaderContainer {
         padding: 14px 38px;
         width: 100%;
     }

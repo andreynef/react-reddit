@@ -1,9 +1,9 @@
-/*.menu {*/
-/*    position: absolute;*/
-/*    top: 17px;*/
-/*    right: 15px;*/
-/*    padding: 0;*/
-/*}*/
+.menu {
+    position: absolute;
+    top: 17px;
+    right: 15px;
+    padding: 0;
+}
 
 .menuButton {
     width: 31px;

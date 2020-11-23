@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from './useeffecttest.css';
+import styles from './useeffecttestComponent.css';
 
-export function UseEffectTest({title}:{title:string}) {
-  //как я понял - при первоначальной отрисовке компонента сработает useIsMounted() и запишется в const[isMount] сработаетинициация при ComponentDidMount,
+export function UseEffectTestComponent ({title}:{title:string}) {
+  //как я понял - при первоначальной отрисовке компонента сработает useIsMounted() и запишется в const[isMount] сработает инициация при ComponentDidMount,
 
   console.log('-C(1.0) initializing [isMounted=undefined] through myCustomHook');
   const[isMounted]=useIsMounted();

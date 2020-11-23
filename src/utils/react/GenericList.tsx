@@ -3,7 +3,7 @@ import React from "react";
 interface IItem {
   id: string;
   text: string;
-  onClick?: (id:string)=> void;//кажд item будет иметь свой метод клика. При глобальном онклике нужно добавить к компоненте GenericList доп пропс onClick, тобишь GenericList({list, onClick}
+  onClick?: (id:string)=> void;//кажд item будет иметь свой метод клика. При глобальном онклике нужно добавить к компоненте GenericListTheory доп пропс onClick, тобишь GenericListTheory({list, onClick}
   className?: string;// у кажд эл свой уник класс
   As?: 'a' | 'li' | 'button' | 'div';//можно менять тэги компонента
   href?: string;//на тот случ если нужна будет ссылка
@@ -15,11 +15,11 @@ interface IGenericListProps {
 
 const noop = () => {};
 
-export function GenericList({list}: IGenericListProps) {//компонент кот можен рендерить люб списки
+export function GenericList({list}: IGenericListProps) {//компонент кот может рендерить любые списки.
   return (
     <>
-      {list.map(({As= 'div', text, onClick= noop, className, id, href})=>(
-        <As className={className}//As заменяется нанужный тэг
+      {list.map(({As= 'li', text, onClick= noop, className, id, href})=>(
+        <As className={className}//As заменяется на нужный тэг
             onClick={()=>onClick(id)}//каждому эл соотв свой онклик
             key={id}
             href={href}

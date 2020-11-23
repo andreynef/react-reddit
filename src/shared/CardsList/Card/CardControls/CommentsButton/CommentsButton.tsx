@@ -8,7 +8,6 @@ import {Comment} from "../Comment";
 interface ICommentButtonProps {
   bookmark:string;
   commentsAmount: number;
-
 }
 
 export function CommentsButton({bookmark, commentsAmount}:ICommentButtonProps) {

@@ -2,6 +2,8 @@ import * as React from "react";
 import {preventDefault} from "../utils/react/preventDefault";
 import {stopPropagation} from "../utils/react/stopPropagation";
 import {getValue} from "../utils/react/pickFromSyntheticEvent";
+//В функциональном программировании наследование заменяют на композицию. (собирают общую ф из др фй).
+//Все что принимает на вход функцию можно сделать с помощью композиции (filter, map, reduce, useEffect).
 
 //если быть совсем точным в типизации фй pipe, compose, filter итд, то можно использовать библиотеку Ramda. Npm i ramda @types/ramda.
 // import * as R from 'ramda';
@@ -12,8 +14,8 @@ function InputExample({value, onChange}: any) {
     <input
       value={value}
       // onChange={preventDefault(stopPropagation(getValue(onChange)))}
-      onChange={compose(onChange, getValue, stopPropagation, preventDefault)}//выполнение фй справа налево
-      // onChange={pipe(preventDefault, stopPropagation, getValue, onChange)}//выполнение фй слева направо
+      // onChange={compose(onChange, getValue, stopPropagation, preventDefault)}//выполнение фй справа налево
+      onChange={pipe(preventDefault, stopPropagation, getValue, onChange)}//выполнение фй слева направо
     />
   )
 }
@@ -27,19 +29,19 @@ function pipe<U>(...fns:Function[]) {//композиция кот исполн�
   return <E,>(initialValue: any):U =>
     fns.reduce((previousValue, fn) => fn(previousValue), initialValue);
 }
+//-------utils-------
+        function pick<K extends string>(prop:K) {//Вспомогательная ф. Забирает из обьекта св-ва. Вынесен в utils.
+          return <O extends Record<K, any>>(objOfExecution:O)=>objOfExecution[prop]
+        }
+        const pickExample = pick('value')({value:'me', otherStuff:2})// -> 'me'. Пример ф pick.
 
-function pick<K extends string>(prop:K) {//забирает из обьекта св-ва
-  return <O extends Record<K, any>>(objOfExecution:O)=>objOfExecution[prop]
-}
-const pickExample = pick('value')({value:'me', otherStuff:2})// -> 'me'. Пример ф pick.
-
-function isEqual<T>(left:T) {//проверяет на равенство
-  return <E extends T>(right:E)=> left===right;
-}
-
-function cond(b:boolean) {
-  return !b;
-}
+        function isEqual<T>(left:T) {//Вспомогательная ф. Проверяет на равенство. Вынесен в utils.
+          return <E extends T>(right:E)=> left===right;
+        }
+        function cond(b:boolean) {//Вспомогательная ф. Меняет boolean на противоположное. Вынесен в utils.
+          return !b;
+        }
+//--------------------
 
 const comments = [//есть какой-то массив комментов приходящий с бэкэнда
   {id:22, text:'textOne'},
@@ -51,18 +53,19 @@ const comments = [//есть какой-то массив комментов п�
 ];
 //нужно убрать коммент с id 22.
 const filteredComments = comments.filter(({id})=>id!==22);//спрашивать кажд элемент на то, что он не равен 22. В итоге вернется новый массив без id 22.
-const filteredComments2 = comments.filter(pipe(pick('id'), isEqual(22)));//Вариант через композицию, pipe, слева направо чер запятую. Получу все элементы с id 22. (взять id -> равен 22?-true -> вернуть в массив).
-const filteredComments3 = comments.filter(pipe(pick('id'), isEqual(22), cond));//Вариант через композицию. Получу все элементы КРОМЕ id 22. (взять id -> равен 22?-true -> поменять на false -> вернуть в массив).
+const filteredComments2 = comments.filter(pipe(pick('id'), isEqual(22)));//Вариант через композицию, pipe, слева направо чер запятую. Получу все элементы с id 22. (взять из обьекта ключ с названием 'id', равен 22?-true -> вернуть в массив).
+const filteredComments3 = comments.filter(pipe(pick('id'), isEqual(22), cond));//Вариант через композицию. Получу все элементы КРОМЕ id 22. (взять из обьекта ключ с названием 'id', равен 22?-true, поменять на false -> вернуть в массив).
 const filterWithId = (id:number)=>pipe(pick('id'), isEqual(id), cond);//вынесем эту композицию в еще 1 ф, чтобы можно было ее использовать отдельно и для дальнейшего упрощения/сокращения кода
-const filteredComments4 = comments.filter(filterWithId(22));//сокращенная запись filteredComment3
+const filteredComments4 = comments.filter(filterWithId(22));//сокращенная запись filteredComment3. Получу элементы только с id 22.
+
 //но и это еще не все! Получите еще одну универсальную упаковку в подарок.->
+
 const createFilterBy = (prop:string)=>(id:number)=>pipe(pick('id'), isEqual(id), cond);//теперь сокращаем еще
 const filterWithId2 = createFilterBy('id');//сокр запись filterWithId
 const filterWithId22 = createFilterBy('id')(22);//применено сразу id 22.
-// const filteredComments5 = comments.filter(pipe(pick('id'), isEqual(22), cond));//Получу все элементы кроме с id 22.
-// const filteredComments6 = comments.filter(filterWithId(22));//Получу элементы только с id 22.
 
 //-------------
+//применим к уже созданной ф pickFromSyntheticEvent в файле utils/react/pickFromSyntheticEvent.tsx
 
 const getValueNumber = pipe<number>(pick('currentTarget'), pick('value'), parseInt)//композиция кот возвращает номер. Взять св-во currentTarget, потом из результата взять св-во value, потом над результатом выполнить ф parseInt. Можно использовать простую типизацию как тут либо загрузить более полную из библиотеки Ramda.
 

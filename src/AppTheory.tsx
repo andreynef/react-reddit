@@ -4,7 +4,7 @@ import {hot} from "react-hot-loader/root";
 import {Layout} from "./shared/Layout";
 import {Content} from "./shared/Content";
 import {CardList} from "./shared/CardsList";
-import {addRandomId} from "./utils/react/generateRandomId";
+import {addRandomId, generateRandomString} from "./utils/react/generateRandomId";
 import {Menu} from "./shared/CardsList/Card/CardHeader/Menu";
 import {Text} from "./shared/Text";
 import {Break} from "./shared/Break";
@@ -22,59 +22,65 @@ import {Dropdown} from "./shared/Dropdown";
 import {UseEffectTestComponent} from "./shared/UseEffectTestComponent";
 import {getValue} from "./utils/react/pickFromSyntheticEvent";
 import {MyHooksUseEffectComponent} from "./myHooks/useIsMounted";
+import {GenericListTheory} from "./5.theory/GenericListTheory";
+import {merge} from "./utils/js/merge";
+import {DropdownTheory} from "./shared/Dropdown/DropdownTheory";
+import {CardListTheory} from "./shared/CardsList/CardListTheory";
 
 //Прога по генерации шаблонов компонент (установка: npm install -g yo generator-react-ts-component-dir):
 //В консоли набрать: yo react-ts-component-dir BLABLAComp ./src/shared. Пример 'yo react-ts-component-dir [component_name] [path] [--styles] [--less] [--sass]'
 
-const someState = {
-  openedThread: 'private',
-  bookmark: 'myPosts',
-  list: [
-    {author:'Pupkin Who', date: '2 months ago', avatar: 'url1', title: 'Реализация намеченных плановых заданий', karma: '255', commentsAmount: 2, isSaved: false},
-    {author:'Pupkin Why', date: '1 months ago', avatar: 'url2', title: 'some title2', karma: '234', commentsAmount: 3, isSaved: true},
-    {author:'Pupkin What', date: '3 months ago', avatar: 'url3', title: 'some title3', karma: '46', commentsAmount: 4, isSaved: true},
-    {author:'Pupkin Where', date: '2 year ago', avatar: 'url4', title: 'some title4', karma: '56756', commentsAmount: 5, isSaved: false},
-    {author:'Pupkin When', date: '5 months ago', avatar: 'url5', title: 'some title5', karma: '67867766', commentsAmount: 6, isSaved: true},
-  ].map(addRandomId)//к кажд элементу будет добавлен 'id'
-}
+const LIST = [//какой-то приходящий лист со стороны для примера.
+  { text: 'some1'},
+  { text: 'some2'},
+  { text: 'some3'},
+  { text: 'some4'},
+].map(addRandomId)//к кажд элементу будет добавлен 'id'
 
-const ass = someState.list.map(item=>item.id);
-console.log(ass)
+function AppComponentTheory() {
+  // const [isVisible, setIsVisible] = React.useState(false);//для примера с MyHooksUseEffectComponent
+  const [title, setTitle] = React.useState('empty');//для примера с MyHooksUseEffectComponent
+  const [listState, setListState] = React.useState(LIST);
+  const [modalState, setModalState] = React.useState(false);
 
-interface IAppComponentProps {
-  openedThread: string;
-  bookmark: string;
-  list: {
-    id: string;
-    author: string;
-    date: string;
-    avatar: string;
-    title: string;
-    karma: string;
-    commentsAmount: number;
-    isSaved: boolean;
-  }[];
-}
+  const handleItemClick = (id:string)=> {
+    setListState(listState.filter((item)=>item.id !== id));
+  }
 
-function AppComponent({openedThread, bookmark,list}:IAppComponentProps) {
+  const handleAdd = ()=>{//push мутирует состояние, поэтому concat.
+    setListState(listState.concat(addRandomId({text: generateRandomString()})));
+  }
 
   return (
     <Layout>
-      {/*<Header openedThread={openedThread} bookmark={bookmark}/>*/}
+      {/*<Header/>*/}
       <Content>
-        <CardList list={list} openedThread={openedThread} bookmark={bookmark}/>
+        {/*<CardList />*/}
+        {/*<button onClick={()=>setIsVisible(!isVisible)}>Change me!</button>*/}
+        <input type={'text'} onChange={getValue(setTitle)}/>
+        {/*{isVisible &&*/}
+        {/*  <MyHooksUseEffectComponent title={title} id='12'/>*/}
+        {/*}*/}
+        {/*<GenericListTheory list={LIST} onClick={console.log} /> //вариант с глоб онкликом. Выводится id при онклике*/}
+        <GenericListTheory list={LIST.map(merge({ onClick:handleItemClick }))}  />{/*вариант с индивид онкликом*/}
+        <button onClick={handleAdd}>Add element</button>
+        {/*<UseEffectTestComponent title={'UseEffectTestComponent. prop title'}/>*/}
       </Content>
-      {/*<CardModal isOpen={false} id={'some post id'}/>*/}
+      <DropdownTheory
+        button={<button>Test</button>}
+        onClose={()=>console.log('closed')}
+        onOpen={()=>console.log('opened')}
+        isOpen={false}
+      >
+        <CardListTheory/>
+      </DropdownTheory>
     </Layout>
   );
 }
 
-export const App = hot(()=> {
+export const AppTheory = hot(()=> {
   return (
-    <AppComponent
-      openedThread={someState.openedThread}
-      bookmark={someState.bookmark}
-      list={someState.list}
+    <AppComponentTheory
     />
   )
 });// HOC. Если используются Hooks, тобишь UseState итд

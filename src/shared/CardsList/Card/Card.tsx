@@ -5,19 +5,26 @@ import {CardHeader} from "./CardHeader";
 import {CardPreview} from "./CardPreview";
 
 interface ICardProps {
-  isSaved?: boolean;
-  id?: string;
+  item: {
+    id: string,
+    author: string,
+    date: string,
+    avatar: string,
+    title: string,
+    karma: string,
+    commentsAmount: number,
+    isSaved: boolean,
+  }
   bookmark:string;
-  commentsAmount: number;
   openedThread:string;
 }
 
-export function Card({id, isSaved, commentsAmount, bookmark, openedThread}:ICardProps) {
+export function Card({item, bookmark, openedThread}:ICardProps) {
   return (
     <li className={styles.card}>
-      <CardHeader bookmark={bookmark} commentsAmount={commentsAmount}/>
-      <CardPreview isSaved={isSaved} id={id}/>
-      <CardControls commentsAmount={commentsAmount} bookmark={bookmark} openedThread={openedThread}/>
+      <CardHeader bookmark={bookmark} commentsAmount={item.commentsAmount} title={item.title} date={item.date} author={item.author} id={item.id}/>
+      <CardPreview isSaved={item.isSaved} id={item.id}/>
+      <CardControls commentsAmount={item.commentsAmount} bookmark={bookmark} openedThread={openedThread}/>
     </li>
   );
 }

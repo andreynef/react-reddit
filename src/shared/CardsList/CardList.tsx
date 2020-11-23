@@ -21,8 +21,10 @@ interface ICardListProps {
 
 export function CardList({bookmark, openedThread, list}:ICardListProps) {
 
+  let allCards;
+
   if (list.length == 0) {
-    return (
+    allCards =
       <ul className={styles.cardList}>
         <EmptyCard/>
         <EmptyCard/>
@@ -30,24 +32,21 @@ export function CardList({bookmark, openedThread, list}:ICardListProps) {
         <EmptyCard/>
         <FaceHmm/>
       </ul>
-    )
+
   } else {
-    const allCards = list.map((item, i) => {
-      return (
+    allCards = list.map((item, i) =>
         <Card
           key={item.id}
-          id={item.id}
-          isSaved={item.isSaved}
-          commentsAmount={item.commentsAmount}
+          item={item}
           bookmark={bookmark}
           openedThread={openedThread}
         />
-      )
-    })
-    return (
-      <ul className={styles.cardList}>
-        {allCards}
-      </ul>
     )
   }
+
+  return (
+    <ul className={styles.cardList}>
+      {allCards}
+    </ul>
+  )
 }

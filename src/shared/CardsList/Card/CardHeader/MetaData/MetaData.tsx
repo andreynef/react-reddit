@@ -1,7 +1,13 @@
 import React from 'react';
 import styles from './metadata.css';
 
-export function MetaData() {
+interface ICardMetaProps {
+  author?: string,
+  date?: string,
+}
+
+export function MetaData({author, date}:ICardMetaProps) {
+
   return (
     <div className={styles.metaData}>
       <div className={styles.userLink}>
@@ -10,13 +16,13 @@ export function MetaData() {
           src="https://copypast.ru/fotografii/foto_zhivotnih/jivotnye_v_obraze_znamenitostej_0_/jivotnye_v_obraze_znamenitostej_0_027.jpg"
           alt="avatar"
         />
-        <a href="#user-url" className={styles.userName}>Дмитрий Гришин</a>
+        <a href="#user-url" className={styles.userName}>{author}</a>
       </div>
       <span className={styles.createdAt}>
             <span className={styles.publishedLabel}>
               опубликовано
             </span>
-            4 часа назад
+        {date}
       </span>
     </div>
   );

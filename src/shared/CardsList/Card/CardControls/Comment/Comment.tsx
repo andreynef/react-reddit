@@ -5,6 +5,8 @@ import {MetaData} from "../../CardHeader/MetaData";
 
 interface ICommentProps {
   commentsAmount: number;
+  author?: string,
+  date?: string,
 }
 
 export function Comment({commentsAmount}: ICommentProps) {

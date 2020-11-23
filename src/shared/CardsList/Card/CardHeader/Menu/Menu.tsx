@@ -5,9 +5,12 @@ import {Text} from "../../../../Text";
 import styles from './menu.css';
 import {MenuItemsList} from "./MenuItemsList";
 
-export function Menu() {
+interface IMenu {
+  id:string
+}
+
+export function Menu({id}:IMenu) {
   return (
-      <div className={styles.menu}>
         <Dropdown//контейнер с логикой дропа
           button={
             <button className={styles.menuButton}>
@@ -16,7 +19,7 @@ export function Menu() {
           }
         >
           <div className={styles.dropdown} >
-            <MenuItemsList postId={'1234'}/>
+            <MenuItemsList id={id}/>
             <button className={styles.closeButton}>
               <Text size={14} mobileSize={12}>
                 Закрыть
@@ -24,6 +27,5 @@ export function Menu() {
             </button>
           </div>
         </Dropdown>
-      </div>
   );
 }

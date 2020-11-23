@@ -49,7 +49,6 @@ module.exports = {
                             }
                         }
                     },//css
-                    'less-loader',//less
                 ],
                 exclude: GLOBAL_CSS_REGEXP // match all css files except GLOBAL_CSS_REGEXP и превращал их в css модули.
             },

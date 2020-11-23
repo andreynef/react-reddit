@@ -1,10 +1,9 @@
-//универсальный компонент-шаблон с логикой DropdownNoAbsolute. Контейнер с 2мя блоками (на что жать и что выпадает). Без стилей, только логика.
-
+//универсальный компонент-шаблон DropdownNoAbsolute. Контейнер с 2мя блоками (на что жать и что выпадает)
 import React, {useEffect, useState} from 'react';
 import styles from './dropdown.css';
 import {CrossIcon} from "../Icons";
 
-interface IDropdownProps {
+interface IDropdownTheoryProps {
   button: React.ReactNode;//на что жмем
   children: React.ReactNode;//что будет выпадать
   isOpen?: boolean;//нужен для контроля "сверху"
@@ -15,50 +14,31 @@ interface IDropdownProps {
 
 const NOOP = () => {};//ф кот ничего не делает. Обертка.
 
-export function Dropdown({button, children, isOpen, onClose=NOOP, onOpen=NOOP, isInline=false}: IDropdownProps) {
+export function DropdownTheory({button, children, isOpen, onClose=NOOP, onOpen=NOOP, isInline=false}: IDropdownTheoryProps) {//ф onClose и onOpen всегда в наличии благодаря NOOP обертке. Тоесть если сверху не переданы пропсы этих методов то ставятся заглушки ничего не вы полняющие.
+  const [isDropdownOpen, setIsDropdownOpen] = React.useState(isOpen);//начальное состояние указаное "сверху".
 
-  const [isDropdownOpen, setIsDropdownOpen] = React.useState(isOpen);
-
-  React.useEffect(()=> {
-    setIsDropdownOpen(isOpen)
-    // console.log('setting local state to what comes from store. Deps:[storeState]')
-  },
-    [isOpen]);
-
-  React.useEffect(()=> {
-    isDropdownOpen ? onOpen() : onClose()
-      // console.log('doing smth depending on local state. Deps:[localState]')
-    },
-    [isDropdownOpen]);
+  React.useEffect(()=> setIsDropdownOpen(isOpen),[isOpen]);//установка слушателя состояния isOpen. Изменился isOpen -> установил State.
+  React.useEffect(()=> isDropdownOpen ? onOpen() : onClose(),[isDropdownOpen]);//для активации колбэков. Установка слушателя состояния isDropdownOpen. Изменился isDropdownOpen -> запуск того или иного колбэка. Выполнится при первом рендере.
 
   const handleOpen =()=>{
-    if (isOpen === undefined) {
+    if (isOpen === undefined) {//если в компоненте для рендера не указан атрибут isOpen то действие по умолчанию - установка State противоположное isDropdownOpen.
       setIsDropdownOpen(!isDropdownOpen)
     }
   }
 
   return (
-    <div className={styles.dropdownContainer}>
-      <div onClick={handleOpen}>
+    <div className={styles.container}>{/*общ контейнер*/}
+      <div onClick={handleOpen}>{/*handler на переключение объекта*/}
         {button}
       </div>
 
       {isDropdownOpen && (
-        <div className={styles.listContainer}>
-          <div className={styles.list} onClick={()=>setIsDropdownOpen(false)}>
+        <div className={styles.listContainer}>{/*контейнер для нашего списка кот рендерится при условии isDropdownOpen*/}
+          <div className={styles.list} onClick={()=>setIsDropdownOpen(false)}>{/*сам список. Закрывается при нажатии*/}
             {children}
           </div>
         </div>
       )}
-      {(isDropdownOpen && isInline) && (
-        <div className={styles.listContainer}>
-          {children}
-          <button className={styles.closeButton} onClick={()=>setIsDropdownOpen(false)}>
-            <CrossIcon/>
-          </button>
-        </div>
-      )}
-
     </div>
   );
 }
