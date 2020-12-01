@@ -1,26 +1,17 @@
 import React from 'react';
 import styles from './threadtitle.css';
-import {SortBlock} from "../../SortBlock";
 
-interface IThreadTitle {
-  openedThread: string;
-}
+export function ThreadTitle() {
 
-export function ThreadTitle({openedThread}:IThreadTitle) {
+  const openedThread = 'private';
+
   return (
-    <>
-      {openedThread === 'private' &&//либо.
-        <h1 className={styles.threadTitle}>
-          Личный кабинет
-        </h1>
-      }
-      {openedThread === 'discussion' &&//либо
-        <>
+    <div className={styles.threadContainer}>
+      <div className={styles.titleContainer}>
           <h1 className={styles.threadTitle}>
-            Дискуссии
+            {openedThread === 'private'?'Личный кабинет':'Дискуссии'}
           </h1>
-        </>
-      }
-    </>
+      </div>
+    </div>
   );
 }

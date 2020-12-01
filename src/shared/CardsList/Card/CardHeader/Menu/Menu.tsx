@@ -1,27 +1,26 @@
 import React from 'react';
-import {MenuIcon} from "../../../../Icons";
 import {Dropdown} from "../../../../Dropdown";
-import {Text} from "../../../../Text";
+import {Text} from "../../../../supportingComponents/Text";
 import styles from './menu.css';
-import {MenuItemsList} from "./MenuItemsList";
+import {MenuDropList} from "./MenuDropList/MenuDropList";
+import {Icon} from "../../../../supportingComponents/Icon";
+import {EIcons} from "../../../../../utils/enums/EIcons";
 
-interface IMenu {
-  id:string
-}
+export function Menu() {
 
-export function Menu({id}:IMenu) {
   return (
         <Dropdown//контейнер с логикой дропа
-          button={
-            <button className={styles.menuButton}>
-              <MenuIcon />
+          button={//на что жать.
+            <button className={styles.menuButton}>{/* кнопка открытия */}
+              <Icon name={EIcons.menu} />
             </button>
           }
+
         >
-          <div className={styles.dropdown} >
-            <MenuItemsList id={id}/>
-            <button className={styles.closeButton}>
-              <Text size={14} mobileSize={12}>
+          <div className={styles.menuDropdown} >{/* что вылазит */}
+            <MenuDropList/>{/* сам лист */}
+            <button className={styles.closeButton}>{/* кнопка закрытия */}
+              <Text size={14} mobileSize={12} >
                 Закрыть
               </Text>
             </button>

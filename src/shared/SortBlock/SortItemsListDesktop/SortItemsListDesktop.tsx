@@ -1,10 +1,10 @@
 import React from 'react';
 import styles from './sortitemslistDesktop.css';
-import {Text} from "../../Text";
+import {Text} from "../../supportingComponents/Text";
 import {EColors} from "../../../utils/enums/EColors";
 import {Dropdown} from "../../Dropdown";
 import {ArrowIcon, RocketIcon} from "../../Icons";
-import {Break} from "../../Break";
+import {Break} from "../../supportingComponents/Break";
 
 interface ISortItemsListProps {
   activeSortItem: string;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './sortitemslist.css';
-import {AyeIcon, CommentIcon, PencilIcon, SaveIcon} from "../../Icons";
-import {Text} from "../../Text";
+import {EyeIcon, CommentIcon, PencilIcon, SaveIcon} from "../../Icons";
+import {Text} from "../../supportingComponents/Text";
 import {EColors} from "../../../utils/enums/EColors";
 
 interface ISortItemsListProps {
@@ -28,7 +28,7 @@ export function SortItemsList({bookmark}:ISortItemsListProps) {//postid нуже
       {bookmark !== 'seen' &&(
         <>
           <li className={styles.sortItem} onClick={()=>console.log('Button has been pressed')}>
-            <AyeIcon />
+            <EyeIcon />
             <Text size={12} color={EColors.gray99}>Просмотренное</Text>
           </li>
           <div className={styles.divider} />

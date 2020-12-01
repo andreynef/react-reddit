@@ -1,5 +1,5 @@
 import React from "react";
-import {UseEffectTestComponent} from "../shared/UseEffectTestComponent";
+import {UseEffectTestComponent} from "../5.theory/UseEffectTestComponent";
 
 // Какие бывают хуки: (Не работают на сервере, тоесть всякие маунты не происходят. Поэтому можно использовать свой useIsMounted для подачи знака что чтото примонтировано = правильнй метод если хотим использовать if)
 //
@@ -76,7 +76,7 @@ export function MyHooksUseEffectComponent({title, id}: {title:string, id?: strin
 }
 
 //---------------------------------
-      function useIsMounted() {//кастомный Hook, кот будет возвращать true когда компонент примонтирован
+      export function useIsMounted() {//кастомный Hook, кот будет возвращать true когда компонент примонтирован
         const [isMounted, setIsMounted] = React.useState(false);
         React.useEffect(()=> {
           setIsMounted(true);//componentDidMount. isMounted => true.

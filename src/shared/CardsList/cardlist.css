@@ -1,6 +1,6 @@
 .cardList {
     background-color: var(--grayF4);
-    position: relative;/*для FaceHmm абсолюта*/
+    position: relative;/*для AnimatedShadow абсолюта*/
 }
 @media all and (min-width: 1024px) {
     .cardList{

@@ -1,8 +1,9 @@
+const {DefinePlugin} = require('webpack');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');//удалить из сервера лишние модули из папки node-modules, тк эта папка и так будет установлена в проекте.
 const NODE_ENV = process.env.NODE_ENV;
 const GLOBAL_CSS_REGEXP = /\.global\.сss$/;
-
+const IS_DEV = NODE_ENV ==='development';
 
 module.exports = {
     target: "node",
@@ -48,6 +49,8 @@ module.exports = {
     },
     optimization: {
         minimize: false, //отключить минимизацию
-    }
+    },
+    devtool: IS_DEV ? 'eval':false,
+    plugins: [new DefinePlugin({'process.env.CLIENT_ID':`'${process.env.CLIENT_ID}'`})]
 };
 

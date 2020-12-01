@@ -37,8 +37,8 @@ export function GenericListTheory({list}: IGenericListProps) {//компонен
 //   return(
 //     <ul>
 //       {list.map((item)=>(
-//         <li onClick={()=> onClick(item.id)} key={item.id}> {item.text}</li>//вариант с глобальным онкликом. Указываем id в онклике
-//         <li onClick={()=>item.onClick(item.id)} key={item.id}> {item.value}</li>//каждому эл соотв свой онклик, поэтому не нужно указывать id.
+//         <li onClick={()=> onClick(item.id)} key={item.id}> {item.text}</li>       //вариант с глобальным онкликом. Указываем id в онклике
+//         <li onClick={()=>item.onClick(item.id)} key={item.id}> {item.value}</li>      //каждому эл соотв свой онклик, поэтому не нужно указывать id.
 //       ))}
 //     </ul>
 //   )

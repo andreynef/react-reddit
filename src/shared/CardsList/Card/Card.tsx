@@ -11,20 +11,18 @@ interface ICardProps {
     date: string,
     avatar: string,
     title: string,
-    karma: string,
+    karma: number,
     commentsAmount: number,
     isSaved: boolean,
   }
-  bookmark:string;
-  openedThread:string;
 }
 
-export function Card({item, bookmark, openedThread}:ICardProps) {
+export function Card({item}:ICardProps) {
   return (
-    <li className={styles.card}>
-      <CardHeader bookmark={bookmark} commentsAmount={item.commentsAmount} title={item.title} date={item.date} author={item.author} id={item.id}/>
-      <CardPreview isSaved={item.isSaved} id={item.id}/>
-      <CardControls commentsAmount={item.commentsAmount} bookmark={bookmark} openedThread={openedThread}/>
-    </li>
+      <div className={styles.card}>
+        <CardHeader commentsAmount={item.commentsAmount} title={item.title} date={item.date} author={item.author}/>
+        <CardPreview isSaved={item.isSaved} id={item.id}/>
+        <CardControls commentsAmount={item.commentsAmount}/>
+      </div>
   );
 }

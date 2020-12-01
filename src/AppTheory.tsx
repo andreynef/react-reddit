@@ -6,8 +6,8 @@ import {Content} from "./shared/Content";
 import {CardList} from "./shared/CardsList";
 import {addRandomId, generateRandomString} from "./utils/react/generateRandomId";
 import {Menu} from "./shared/CardsList/Card/CardHeader/Menu";
-import {Text} from "./shared/Text";
-import {Break} from "./shared/Break";
+import {Text} from "./shared/supportingComponents/Text";
+import {Break} from "./shared/supportingComponents/Break";
 import {Header} from "./shared/Header";
 import {SortBlock} from "./shared/SortBlock";
 import {MakeComment} from "./shared/modals/CardModal/MakeComment";
@@ -19,13 +19,13 @@ import styles from "./shared/SortBlock/sortblock.css";
 import {ArrowIcon, RocketIcon} from "./shared/Icons";
 import {EColors} from "./utils/enums/EColors";
 import {Dropdown} from "./shared/Dropdown";
-import {UseEffectTestComponent} from "./shared/UseEffectTestComponent";
+import {UseEffectTestComponent} from "./5.theory/UseEffectTestComponent";
 import {getValue} from "./utils/react/pickFromSyntheticEvent";
 import {MyHooksUseEffectComponent} from "./myHooks/useIsMounted";
 import {GenericListTheory} from "./5.theory/GenericListTheory";
 import {merge} from "./utils/js/merge";
-import {DropdownTheory} from "./shared/Dropdown/DropdownTheory";
 import {CardListTheory} from "./shared/CardsList/CardListTheory";
+import {DropdownTheory} from "./6.theory/DropdownTheory";
 
 //Прога по генерации шаблонов компонент (установка: npm install -g yo generator-react-ts-component-dir):
 //В консоли набрать: yo react-ts-component-dir BLABLAComp ./src/shared. Пример 'yo react-ts-component-dir [component_name] [path] [--styles] [--less] [--sass]'

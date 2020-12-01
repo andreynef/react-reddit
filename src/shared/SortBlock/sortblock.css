@@ -1,3 +1,6 @@
+.sortContainer {
+    border:1px solid red;
+}
 
 .sortBlockDiscussionButton {
     background-color: var(--white);
@@ -48,5 +51,11 @@
         width: 14px;
         height: 16px;
     }
+
+    .sortContainer *{/*все что в этом контейнере*/
+        background-color: unset;
+        font-size: 20px;
+    }
+
 
 }

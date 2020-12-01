@@ -3,8 +3,7 @@
 /*}*/
 
 .karmaValue {
-    /*color: var(--grayC4);*/
-    color: #C4C4C4;
+    color: var(--grayC4);
 }
 
 .down {
@@ -32,11 +31,11 @@
 }
 
 @media all and (min-width: 1540px) {
-    .karmaCounter > button.up:hover > svg > path {
+    .karmaCounter > button.up:hover svg > path {
         fill: var(--green);
     }
 
-    .karmaCounter > button.down:hover > svg > path {
+    .karmaCounter > button.down:hover svg > path {
         fill: var(--orange);
     }
 }

@@ -1,0 +1,19 @@
+.searchGroup {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    background-color: var(--white);
+    border-radius: 0 0 7px 7px;
+    padding: 14px 20px;
+}
+
+
+@media all and (min-width: 1024px) {
+    .searchGroup {
+        background-color: unset;
+        border-radius: unset;
+        padding: 0;
+        flex-direction: row-reverse;/*развернуть положение*/
+        align-items: center;
+    }
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './facehmm.css';
 import {ArrowFilledIcon, MenuIcon} from "../../Icons";
-import {Break} from "../../Break";
+import {Break} from "../../supportingComponents/Break";
 
 interface ICardProps {
   isSaved?: boolean;

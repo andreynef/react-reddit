@@ -4,7 +4,7 @@ import {HeaderMeta} from "../../HeaderModal/HeaderTextBlock/HeaderMeta";
 import {FactNActionsPanel} from "../../FactNActionsPanel.tsx";
 import {ArrowFilledIcon, ArrowIcon} from "../../../../Icons";
 import {ArrowDownIcon} from "../../../../Icons/ArrowDownIcon";
-import {Break} from "../../../../Break";
+import {Break} from "../../../../supportingComponents/Break";
 
 let commentOnCommentOnComment = (
   <li className={styles.item}>

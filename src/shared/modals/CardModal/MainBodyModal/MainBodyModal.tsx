@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './mainbodymodal.css';
-import {Break} from "../../../Break";
+import {Break} from "../../../supportingComponents/Break";
 
 export function MainBodyModal() {
   return (

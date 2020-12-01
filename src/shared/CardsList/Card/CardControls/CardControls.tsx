@@ -5,19 +5,17 @@ import {Actions} from "./Actions";
 import {CommentsButton} from "./CommentsButton";
 
 interface IControls {
-  bookmark:string;
   commentsAmount: number;
-  openedThread:string;
 }
 
-export function CardControls({bookmark, commentsAmount, openedThread}:IControls) {
+export function CardControls({commentsAmount}:IControls) {
   return (
     <div className={styles.controls}>
       <KarmaCounter/>
       <div className={styles.controlsCommentsContainer}>
-        <CommentsButton bookmark={bookmark} commentsAmount={commentsAmount}/>
+        <CommentsButton commentsAmount={commentsAmount}/>
       </div>
-      <Actions openedThread={openedThread} bookmark={bookmark}/>
+      <Actions/>
     </div>
   );
 }

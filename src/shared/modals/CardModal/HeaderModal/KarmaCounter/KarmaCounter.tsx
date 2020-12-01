@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './karmacounter.css';
 import {ArrowFilledIcon} from "../../../../Icons";
-import {Break} from "../../../../Break";
+import {Break} from "../../../../supportingComponents/Break";
 
 export function KarmaCounter() {
   return (

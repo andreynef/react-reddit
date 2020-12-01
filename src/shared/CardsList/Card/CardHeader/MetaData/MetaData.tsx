@@ -13,7 +13,7 @@ export function MetaData({author, date}:ICardMetaProps) {
       <div className={styles.userLink}>
         <img
           className={styles.avatar}
-          src="https://copypast.ru/fotografii/foto_zhivotnih/jivotnye_v_obraze_znamenitostej_0_/jivotnye_v_obraze_znamenitostej_0_027.jpg"
+          src={"https://copypast.ru/fotografii/foto_zhivotnih/jivotnye_v_obraze_znamenitostej_0_/jivotnye_v_obraze_znamenitostej_0_027.jpg"}
           alt="avatar"
         />
         <a href="#user-url" className={styles.userName}>{author}</a>

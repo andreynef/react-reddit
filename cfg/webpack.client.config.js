@@ -1,17 +1,26 @@
 const path = require('path');
-const {HotModuleReplacementPlugin} = require('webpack'); //уже есть в вебпаке
+const {HotModuleReplacementPlugin, DefinePlugin} = require('webpack'); //уже есть в вебпаке
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 const NODE_ENV = process.env.NODE_ENV;
 const IS_DEV = NODE_ENV ==='development';
 const IS_PROD = NODE_ENV ==='production';
 const GLOBAL_CSS_REGEXP = /\.global\.css$/;
+const DEV_PLUGINS = [
+    new CleanWebpackPlugin(),//удаление старых сгенерированных chunks при генерации новых js файлов при каждом изменении кода
+    new HotModuleReplacementPlugin(),
+];
+const COMMON_PLUGINS = [
+    new DefinePlugin(
+      // {'process.env.CLIENT_ID':"'EbQkgBbSpBpWzQ'"},//client id for Reddit. "" для того что плагин вставляет то что внутри "" как строку.
+      {'process.env.CLIENT_ID':`'${process.env.CLIENT_ID}'`}//либо закинуть его в env чтобы этот айди не лежал в приложении а подавался извне. Client id передаем в package.json.
+    ),
+];
 
 setupDevtool = () =>{
     if (IS_DEV) return 'eval';
     if (IS_PROD) return false;
 }
-
 
 module.exports = {
     mode: NODE_ENV ? NODE_ENV : 'development',
@@ -60,10 +69,7 @@ module.exports = {
     },
     devtool: setupDevtool(),
     plugins: IS_DEV
-        ? [
-        new CleanWebpackPlugin(),//удаление старых сгенерированных chunks при генерации новых js файлов при каждом изменении кода
-        new HotModuleReplacementPlugin(),
-        ]
-        : [],
+        ? DEV_PLUGINS.concat(COMMON_PLUGINS)//используем и дев и коммон плагины
+        : COMMON_PLUGINS,//при продакшене исп только коммон плагины
 };
 

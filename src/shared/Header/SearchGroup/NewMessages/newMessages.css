@@ -1,0 +1,37 @@
+.messagesButton {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+/*.messagesButton * {*/
+/*    color: var(--grayC4);*/
+/*}*/
+
+.messagesButton:hover svg path {
+    fill: var(--orange);
+}
+
+.messagesTextContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--orange);
+}
+
+@media all and (min-width: 1024px) {
+    .messagesTextContainer {
+        /*width: 20px;*/
+        /*height: 20px;*/
+        /*font-size: 14px;*/
+        /*line-height: 20px;*/
+    }
+
+    .messagesButton svg {
+        /*width: 20px;*/
+        /*height: 16px;*/
+    }
+}
