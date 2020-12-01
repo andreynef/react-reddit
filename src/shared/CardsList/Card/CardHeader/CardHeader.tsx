@@ -15,7 +15,7 @@ interface ITextContentProps {
 export function CardHeader({commentsAmount, title, date, author}:ITextContentProps) {
 
   const handleClick = ()=>{
-    alert('title is pressed. Used NotStandardLink, which is - preventDefault(stopPropagation(props.onClick)')
+    alert('title is pressed. Used NotStandardLink ---> preventDefault(stopPropagation(props.onClick)')
   }
 
   return (

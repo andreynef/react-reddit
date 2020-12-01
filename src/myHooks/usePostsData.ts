@@ -35,9 +35,10 @@ export function usePostsData () {
   const [data, setData] = useState<any>({});//создание своего локального стейта
 
   useEffect(()=>{//1раз/прогон без токена, 2раз с токеном.
-    axios.get('https://www.reddit.com/r/javascript/best.json',{
+    axios.get('https://www.reddit.com/best.json',{
     })
       .then((resp)=>{
+        console.log('sdsdsd',resp.data.data.children)
         const dataArr = resp.data.data.children.map((item:any)=>getFewKeys(item.data))
         setData({list:dataArr})
       })

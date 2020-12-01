@@ -17,9 +17,9 @@ export function CardList() {
       {author:'Pupkin When', date: '10/10/2020', avatar: 'url5', title: 'some title5', karma: 67867766, commentsAmount: 6, isSaved: true},
     ].map(addRandomId)//к кажд обьекту массива будет добавлен id вида id: 6r26er235re
 
-  // const {list} = useContext(postsContext);
+  const {list} = useContext(postsContext);
 
-  const listVary = listTemplate;//list?list:listTemplate
+  const listVary = list?list:listTemplate
 
   const cardsForGenericList = listVary.map((item:any)=>(
       {

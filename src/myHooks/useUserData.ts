@@ -16,7 +16,6 @@ export function useUserData () {
       headers:{Authorization: `bearer ${token}`}
     })
       .then((resp)=>{
-        console.log('sdsdsdsdsd',resp.data)
         setData({name:resp.data.name, iconImg:resp.data.icon_img.split("?")[0]})//ловим ответ и сетим ниже только нужные данные. Подробности в доке www.reddit.com/dev/api/oauth
       })
       .catch(console.log)
