@@ -12,7 +12,6 @@ export function UserBlock() {
   const {name, iconImg} = useContext(userContext)
   const href = getRedditAuthUrl();
 
-console.log(href)
   return (//--> <a> --> www.reddit.com --> server.js '/auth' + код --> запрос токена --> ответ --> html шаблон window.__token__ --> App
     <a href={href} className={styles.userBox}>
       <div className={styles.avatarBox}>

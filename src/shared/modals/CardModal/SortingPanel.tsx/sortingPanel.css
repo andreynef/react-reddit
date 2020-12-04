@@ -3,9 +3,8 @@
     flex-flow: row nowrap;
     color: var(--gray99);
     padding: 17px 0;
-    border-bottom: 1px solid var(--grayD9);
+    /*border-bottom: 1px solid var(--grayD9);*/
     font-size: 14px;
-    margin: 0 0 40px 0;
 }
 
 .container span {

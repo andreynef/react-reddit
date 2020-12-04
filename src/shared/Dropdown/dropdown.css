@@ -4,7 +4,7 @@
 }
 
 .listContainer {/*контейнер для списка*/
-    position: relative;/*держать список внутри себя*/
+    position: relative;/*держать список относительно этого дива*/
 }
 
 .list {/*сам список*/
@@ -13,12 +13,13 @@
     top: 0;
     width: 100%;
     height: 100%;
+    z-index: 1000;
 }
 
-.closeButton {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-}
+/*.closeButton {*/
+/*    position: absolute;*/
+/*    top: 20px;*/
+/*    right: 20px;*/
+/*}*/
 
 

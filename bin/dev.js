@@ -25,18 +25,18 @@ hmrServer.use(webpackHotMiddleware(clientCompiler, {
 }));
 
 hmrServer.listen(3001, ()=>{
-    console.log ('Hot Module Replacement gonna start...now');
+    console.log ('HMR gonna start...now');
 })
 
 const compiler = webpack(webpackServerConfig);//серверная часть остается неизменной
 
 compiler.run((err)=>{//холодный старт приложения
     if(err){
-        console.log('Compilation failed:', err);
+        console.log('Compilation failed. Damn:', err);
     }
     compiler.watch({}, (err) => {//1 арг options пустой тк дефолт сойдет, 2 арг handler
         if(err){
-            console.log('Compilation failed:', err);
+            console.log('Compilation failed. Damn:', err);
         }
         console.log("Compilation was successful. That's good...");
     });

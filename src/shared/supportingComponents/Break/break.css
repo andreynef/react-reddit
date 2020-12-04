@@ -25,6 +25,9 @@
 .s30 {
     padding: 0 30px 0 0;
 }
+.s40 {
+    padding: 0 40px 0 0;
+}
 
 .s50 {
     padding: 0 50px 0 0;
@@ -60,6 +63,9 @@
 
 .top.s30 {
     padding: 30px 0 0;
+}
+.top.s40 {
+    padding: 40px 0 0;
 }
 
 .top.s50 {
@@ -100,6 +106,10 @@
         padding: 0 30px 0 0;
     }
 
+    .m40 {
+        padding: 0 40px 0 0;
+    }
+
     .m50 {
         padding: 0 50px 0 0;
     }
@@ -130,6 +140,10 @@
 
     .top.m30 {
         padding: 30px 0 0;
+    }
+
+    .top.m40 {
+        padding: 40px 0 0;
     }
 
     .top.m50 {
@@ -168,6 +182,10 @@
         padding: 0 30px 0 0;
     }
 
+    .t40 {
+        padding: 0 40px 0 0;
+    }
+
     .t50 {
         padding: 0 50px 0 0;
     }
@@ -198,6 +216,10 @@
 
     .top.t30 {
         padding: 30px 0 0;
+    }
+
+    .top.t40 {
+        padding: 40px 0 0;
     }
 
     .top.t50 {
@@ -236,6 +258,10 @@
         padding: 0 30px 0 0;
     }
 
+    .d40 {
+        padding: 0 40px 0 0;
+    }
+
     .d50 {
         padding: 0 50px 0 0;
     }
@@ -266,6 +292,10 @@
 
     .top.d30 {
         padding: 30px 0 0;
+    }
+
+    .top.d40 {
+        padding: 40px 0 0;
     }
 
     .top.d50 {

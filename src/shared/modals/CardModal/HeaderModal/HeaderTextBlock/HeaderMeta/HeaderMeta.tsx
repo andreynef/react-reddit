@@ -17,7 +17,7 @@ export function HeaderMeta({name, theme, isComment=false, commentedOn='7 час�
       <div className={styles.nameContainer}>
         <img
           className={styles.avatarImg}
-          src="https://storage.myseldon.com/news_pict_7C/7C414D87E35B9F89A26DA540F4A1D07F"
+          src="https://c7.uihere.com/files/54/214/491/rick-sanchez-morty-smith-rick-and-morty-season-1-adult-swim-rick-and-morty.jpg"
           alt="avatar"
         />
         <span className={styles.name}>{name}</span>

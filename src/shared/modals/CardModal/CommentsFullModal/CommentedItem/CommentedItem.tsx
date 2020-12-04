@@ -51,7 +51,8 @@ let commentOnComment = (
   </li>
 )
 
-export function CommentedItem() {
+export function CommentItem() {
+
   return (
     <li className={styles.item}>
       <div className={styles.visualThreadContainer}>
@@ -67,9 +68,7 @@ export function CommentedItem() {
         <HeaderMeta name={"Sender's Name"} theme={"sender's theme"} isComment/>
         <p className={styles.text}>Сторонники тоталитаризма в науке будут объективно рассмотрены соответствующими инстанциями. Лишь реплицированные с зарубежных источников, современные исследования будут описаны максимально подробно.
         </p>
-        <div className={styles.actionsContainer}>
-          <FactNActionsPanel isComment={true}/>
-        </div>
+        <FactNActionsPanel isComment={true}/>
         {commentOnComment}
       </div>
     </li>

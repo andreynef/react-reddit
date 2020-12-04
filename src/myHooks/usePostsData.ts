@@ -38,7 +38,7 @@ export function usePostsData () {
     axios.get('https://www.reddit.com/best.json',{
     })
       .then((resp)=>{
-        console.log('sdsdsd',resp.data.data.children)
+        // console.log('sdsdsd',resp.data.data.children)
         const dataArr = resp.data.data.children.map((item:any)=>getFewKeys(item.data))
         setData({list:dataArr})
       })

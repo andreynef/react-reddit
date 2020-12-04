@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './factNActionsPanel.css';
 import {BlockIcon, CommentIcon, SaveIcon, ShareIcon, WarningIcon} from "../../../Icons";
+import {Answer} from "./Answer";
 
 interface IFactNActionsPanel {
   postId?: string;
@@ -10,6 +11,8 @@ interface IFactNActionsPanel {
 }
 
 export function FactNActionsPanel({postId, votedPercentage, commentsCount, isComment=false}:IFactNActionsPanel) {
+
+
   return (
     <div className={styles.actionsContainer}>
       <ul className={styles.actionsList}>
@@ -40,8 +43,9 @@ export function FactNActionsPanel({postId, votedPercentage, commentsCount, isCom
       {isComment &&(
         <>
           <li className={styles.actionsItem} onClick={()=>console.log('Button has been pressed')}>
-            <CommentIcon />
-            <span>Ответить</span>
+            {/*<CommentIcon />*/}
+            {/*<span>Ответить</span>*/}
+            <Answer/>
           </li>
           <li className={styles.actionsItem} onClick={()=>console.log('Button has been pressed')}>
             <ShareIcon />

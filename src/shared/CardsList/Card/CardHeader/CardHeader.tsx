@@ -3,7 +3,7 @@ import styles from './CardHeader.css';
 import {MetaData} from "./MetaData";
 import {ActionsContent} from "./ActionsContent";
 import {Menu} from "./Menu";
-import {NotStandardLink} from "../../../../utils/react/NotStandardLink";
+import {Title} from "./Title";
 
 interface ITextContentProps {
   commentsAmount:number;
@@ -14,9 +14,6 @@ interface ITextContentProps {
 
 export function CardHeader({commentsAmount, title, date, author}:ITextContentProps) {
 
-  const handleClick = ()=>{
-    alert('title is pressed. Used NotStandardLink ---> preventDefault(stopPropagation(props.onClick)')
-  }
 
   return (
     <div className={styles.cardHeaderContainer}>
@@ -24,9 +21,7 @@ export function CardHeader({commentsAmount, title, date, author}:ITextContentPro
         <MetaData date={date} author={author}/>
         <Menu/>
       </div>
-      <h2 className={styles.titleContainer}>
-        <NotStandardLink href={"#post-url"} text={title} onClick={handleClick}/>
-      </h2>
+      <Title title={title}/>
       <ActionsContent commentsAmount={commentsAmount}/>
     </div>
   );

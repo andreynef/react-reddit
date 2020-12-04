@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './main.global.css';
 import {hot} from "react-hot-loader/root";
 import {Layout} from "./shared/Layout";
@@ -8,26 +8,37 @@ import {Header} from "./shared/Header";
 import {useToken} from "./myHooks/useToken";
 import {tokenContext} from "./shared/context/tokenContext";
 import {PostsContextProvider} from "./shared/context/postsContext";
+import {commentContext} from "./shared/context/commentContext";
+import {Provider} from 'react-redux';
+import {createStore} from "redux";
+import {composeWithDevTools} from "redux-devtools-extension";
 
 //Прога по генерации шаблонов компонент (установка: npm install -g yo generator-react-ts-component-dir):
 //В консоли набрать: yo react-ts-component-dir BLABLAComp ./src/shared. Пример 'yo react-ts-component-dir [component_name] [path] [--styles] [--less] [--sass]'
 
+const storeTheory = createStore(()=>{}, composeWithDevTools());//composeWithDevTools для соединения стора с хромовским расширением Redux чтобы зыркать все что с происходит со стором.
 
 function AppComponent() {
+  const [commentValue, setCommentValue] = useState('');
+  const CommentProvider = commentContext.Provider;
   const [token] = useToken();//теперь есть токен на клиенте (записан в window.__token__). Далее прокидываем его в пропсы нужн компонентов, либо напрямую используя контекст оборачивая в Provider.
   // const {Provider} = tokenContext;//создаем контекст и оборачиваем все содержимое App в Provider. Либо создаем свой на основе него.
   return (
-    <tokenContext.Provider value={token}>{/*токен контекст для всех компонентов*/}
-      <Layout>
-        <Header/>
-        <Content>
-          <PostsContextProvider>
-            <CardList/>
-          </PostsContextProvider>
-        </Content>
-        {/*<CardModal isOpen={false} id={'some post id'}/>*/}
-      </Layout>
-    </tokenContext.Provider>
+    <Provider store={storeTheory}>
+      <CommentProvider value={{value:commentValue, onChange: setCommentValue}}>
+        <tokenContext.Provider value={token}>{/*токен контекст для всех компонентов*/}
+          <Layout>
+            <Header/>
+            <Content>
+              <PostsContextProvider>
+                <CardList/>
+              </PostsContextProvider>
+            </Content>
+            {/*<CardModal isOpen={false} id={'some post id'}/>*/}
+          </Layout>
+        </tokenContext.Provider>
+      </CommentProvider>
+    </Provider>
   );
 }
 

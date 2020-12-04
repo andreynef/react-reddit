@@ -15,7 +15,6 @@ export function Menu() {
               <Icon name={EIcons.menu} />
             </button>
           }
-
         >
           <div className={styles.menuDropdown} >{/* что вылазит */}
             <MenuDropList/>{/* сам лист */}

@@ -1,17 +1,19 @@
 import React from 'react';
 import styles from './commentsfullmodal.css';
 import {HeaderMeta} from "../HeaderModal/HeaderTextBlock/HeaderMeta";
-import {CommentedItem} from "./CommentedItem";
+import {CommentItem} from "./CommentedItem";
+import {Break} from "../../../supportingComponents/Break";
 
 interface IcommentsListProps {
   commentsArr: string[];
 }
 
-export function CommentsFullModal({commentsArr}:IcommentsListProps) {
+export function CommentsRoot({commentsArr}:IcommentsListProps) {
   return (
     <ul className={styles.list}>
       {/*{commentsArr}*/}
-      <CommentedItem/>
+      <CommentItem/>
+      <CommentItem/>
     </ul>
   );
 }

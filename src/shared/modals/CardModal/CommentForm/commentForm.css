@@ -19,7 +19,7 @@
     border-radius: 3px 3px 0 0;
     padding: 20px 20px 55px 20px;
     width: 100%;
-    background-color: transparent;
+    background-color: white;
     resize: none;
     outline: none;
     font-size: 16px;
@@ -65,20 +65,19 @@
     padding: 0 20px;
     display: flex;
     align-items: center;
-    /*justify-content: space-between;*/
+    justify-content: space-between;
     background-color: #e5e5e5;
     border-radius: 0 0 0 3px;
 }
-
-.instrumentsPanel svg{
-    margin-right: 25px;
+.instrumentsPanel div {
+    /*margin-right: 25px;*/
 }
 
-.instrumentsPanel svg:hover {
+.instrumentsPanel div:hover {
     cursor: pointer;
 }
 
-.instrumentsPanel svg:hover path{
+.instrumentsPanel div:hover svg path{
     fill: var(--orange);
 }
 

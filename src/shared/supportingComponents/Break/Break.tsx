@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './break.css';
 import classNames from "classnames";//из библиотеки. (npm i classnames @types/classnames).
 
-type TBreakSize = 4 | 8 | 10 | 12 | 14 | 16 | 20 | 30 | 50;//просто так. Нужно согласовать с дизайнером.
+type TBreakSize = 4 | 8 | 10 | 12 | 14 | 16 | 20 | 30 | 40| 50;//просто так. Нужно согласовать с дизайнером.
 type TDisplays = 'mobile' | 'tablet' | 'desktop';
 
 interface IBreakProps {

@@ -3,9 +3,7 @@
     flex-flow: row nowrap;
     justify-content: space-between;
     color: var(--gray99);
-    padding: 17px 0;
-    border-top: 1px solid var(--grayD9);
-    margin: 30px 0 0 0;
+    margin: 10px 0 0 0;
 }
 
 .actionsContainer span {

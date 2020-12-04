@@ -3,6 +3,11 @@
 import React, {useEffect, useState} from 'react';
 import styles from './dropdown.css';
 import {CrossIcon} from "../Icons";
+import ReactDOM from "react-dom";
+import { usePortalZone } from '../../myHooks/usePortalZone';
+import {CardModal} from "../modals/CardModal";
+
+const NOOP = () => {};//ф кот ничего не делает. Обертка.
 
 interface IDropdownProps {
   button: React.ReactNode;//на что жмем
@@ -13,22 +18,20 @@ interface IDropdownProps {
   isInline?:boolean;
 }
 
-const NOOP = () => {};//ф кот ничего не делает. Обертка.
+export function Dropdown ({button, children, isOpen, onClose=NOOP, onOpen=NOOP, isInline=false}: IDropdownProps) {
 
-export function Dropdown({button, children, isOpen, onClose=NOOP, onOpen=NOOP, isInline=false}: IDropdownProps) {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(isOpen);
 
-  const [isDropdownOpen, setIsDropdownOpen] = React.useState(isOpen);
-
-  React.useEffect(()=> {
+  useEffect(()=> {
     setIsDropdownOpen(isOpen)
     // console.log('setting local state to what comes from store. Deps:[storeState]')
-  },
+  },//отвечает за приходящий сверху стейт откр/закр
     [isOpen]);
 
-  React.useEffect(()=> {
+  useEffect(()=> {
     isDropdownOpen ? onOpen() : onClose()
       // console.log('doing smth depending on local state. Deps:[localState]')
-    },
+    },//отвечает за локальный стейт копирующий состояние сверху.
     [isDropdownOpen]);
 
   const handleOpen =()=>{
@@ -37,6 +40,11 @@ export function Dropdown({button, children, isOpen, onClose=NOOP, onOpen=NOOP, i
     }
   }
 
+  //----------для рендера в портал----------
+        const [node] = usePortalZone();
+        if(!node) return null;
+  //----------------------------------------
+
   return (
     <div className={styles.dropdownContainer}>
       <div onClick={handleOpen}>
@@ -44,24 +52,32 @@ export function Dropdown({button, children, isOpen, onClose=NOOP, onOpen=NOOP, i
       </div>
 
       {isDropdownOpen && (
-        <div className={styles.listContainer}>
-          <div className={styles.list} onClick={()=>setIsDropdownOpen(false)}>
-            {children}
-          </div>
-        </div>
+            <div className={styles.listContainer}>
+              {
+                ReactDOM.createPortal((
+                  <div className={styles.list} onClick={()=>setIsDropdownOpen(false)}>
+                    {children}
+                  </div>
+                ), node)
+              }
+            </div>
       )}
-      {(isDropdownOpen && isInline) && (
-        <div className={styles.listContainer}>
-          {children}
-          <button className={styles.closeButton} onClick={()=>setIsDropdownOpen(false)}>
-            <CrossIcon/>
-          </button>
-        </div>
-      )}
-
     </div>
   );
 }
+
+// interface IDropChild {
+//   children: React.ReactNode;
+// }
+//
+// const DropDownChildren = ({children}:IDropChild)=>{
+//   const [node] = usePortalZone();
+//   if(!node) return null;
+//
+//   return ReactDOM.createPortal((
+//     {children}
+//     ), node)
+// }
 
 // export function DropdownTest({button, children, isOpen, onClose=NOOP, onOpen=NOOP, isInline=false}: IDropdownProps) {//ф onClose и onOpen всегда в наличии благодаря NOOP обертке. Тоесть если сверху не переданы пропсы этих методов то ставятся заглушки ничего не выполняющие.
 //   const divRef = React.useRef<HTMLDivElement>(null);

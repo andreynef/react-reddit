@@ -10,7 +10,7 @@ import {addRandomId} from "../../utils/react/generateRandomId";
 export function CardList() {
 
   const listTemplate = [
-      {author:'Pupkin Who', date: '10/10/2020', avatar: 'url1', title: 'Реализация намеченных плановых заданий', karma: '255', commentsAmount: 2, isSaved: false},
+      {author:'Pupkin Who', date: '10/10/2020', avatar: 'url1', title: 'some title1', karma: 255, commentsAmount: 2, isSaved: false},
       {author:'Pupkin Why', date: '10/10/2020', avatar: 'url2', title: 'some title2', karma: 234, commentsAmount: 3, isSaved: true},
       {author:'Pupkin What', date: '10/10/2020', avatar: 'url3', title: 'some title3', karma: 46, commentsAmount: 4, isSaved: true},
       {author:'Pupkin Where', date: '10/10/2020', avatar: 'url4', title: 'some title4', karma: 56756, commentsAmount: 5, isSaved: false},
