@@ -8,9 +8,7 @@ import {UserContextProvider} from "../../context/userContext";
 export function SearchGroup() {
   return (
     <div className={styles.searchGroup}>
-      <UserContextProvider>{/*получает данные о пользователе, замыкает их в контексте, и передает их люб компоненту*/}
-        <UserBlock/>
-      </UserContextProvider>
+      <UserBlock/>
       <SearchBlock/>
       <NewMessages/>
     </div>

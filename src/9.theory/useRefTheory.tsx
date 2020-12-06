@@ -1,6 +1,6 @@
 // import React, {useEffect, useRef} from "react";
 // import ReactDOM from "react-dom";
-// import styles from "../shared/modals/CardModal/Cardmodal.css";
+// import styles from "../shared/modals/CommentModal/commentModal.css";
 //
 // // function Input () {
 // //   const myRef = useRef(null);

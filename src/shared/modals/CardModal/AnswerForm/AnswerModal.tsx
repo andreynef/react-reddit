@@ -1,0 +1,168 @@
+import React, {ChangeEvent, FormEvent, useContext, useEffect, useRef, useState} from 'react';
+import styles from './answerForm.css';
+import ReactDOM from "react-dom";
+import {useOutsideClick} from "../../../../myHooks/useOutsideClick";
+import {preventDefault} from "../../../../utils/react/preventDefault";
+import {stopPropagation} from "../../../../utils/react/stopPropagation";
+
+interface IAnswerForm {
+  name:string
+  onClose:()=>void;
+}
+
+//-----------------------local controlled-------------------------
+
+export function AnswerModalLocalControlled({name, onClose}:IAnswerForm) {
+
+  const [value, setValue] = useState('');
+
+  //--------для фокуса при рендере----------
+  const refTextArea = useRef<HTMLTextAreaElement>(null);
+  useEffect(()=>{//при рендере устанавливается фокус
+    if(refTextArea && refTextArea.current) {//избежание null ошибки
+      refTextArea.current.focus();
+    }
+  },[])
+  //----------------------------------------
+
+  //--------для клика снаружи----------
+  const ref = useRef<HTMLDivElement>(null);
+  useOutsideClick({ref, onClose});
+  //-----------------------------------
+
+
+  const handleSubmit = (event:FormEvent)=>{
+    alert(`submitting: "${value}"`)
+    onClose();
+  }
+
+  return (
+    <div className={styles.answerBacksideContainer}>
+      <div className={styles.answerBodyContainer} ref={ref}>
+        <form className={styles.answerForm} method={'post'} onSubmit={preventDefault(stopPropagation(handleSubmit))}>
+          <textarea ref={refTextArea} className={styles.answerTextArea} placeholder={`${name}, оставьте ваш комментарий`} value={value} onChange={(event)=>setValue(event.target.value)}/>
+          <button type='submit' className={styles.answerButton}>Ответить</button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+//-----------------------local unControlled-------------------------
+
+export function AnswerModalLocalUncontrolled({name, onClose}:IAnswerForm) {
+
+  //--------для фокуса при рендере + доступ к current----------
+  const refTextArea = useRef<HTMLTextAreaElement>(null);
+  useEffect(()=>{//при рендере устанавливается фокус
+    if(refTextArea && refTextArea.current) {//избежание null ошибки
+      refTextArea.current.focus();
+    }
+  },[])
+  //----------------------------------------
+
+  //--------для клика снаружи----------
+  const ref = useRef<HTMLDivElement>(null);
+  useOutsideClick({ref, onClose});
+  //-----------------------------------
+
+  const handleSubmit = ()=>{
+    alert(`submitting: "${refTextArea.current?.value}"`)
+    onClose();
+  }
+
+  return (
+    <div className={styles.answerBacksideContainer}>
+      <div className={styles.answerBodyContainer} ref={ref}>
+        <form className={styles.answerForm} method={'post'} onSubmit={preventDefault(stopPropagation(handleSubmit))}>
+          <textarea ref={refTextArea} className={styles.answerTextArea} placeholder={`${name}, оставьте ваш комментарий`}/>
+          <button type='submit' className={styles.answerButton}>Ответить</button>
+        </form>
+      </div>
+    </div>
+  );
+}
+//-----------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------
+
+
+
+
+//----------------------portal controlled-----------------------------------------------
+
+export function AnswerModalPortalControlled({name, onClose}:IAnswerForm) {
+
+  const [value, setValue] = useState('');
+
+  //--------для фокуса при рендере----------
+  const refTextArea = useRef<HTMLTextAreaElement>(null);
+  useEffect(()=>{//при рендере устанавливается фокус
+    if(refTextArea && refTextArea.current) {//избежание null ошибки
+      refTextArea.current.focus();
+    }
+  },[])
+  //----------------------------------------
+
+  //--------для клика снаружи----------
+  const ref = useRef<HTMLDivElement>(null);
+  useOutsideClick({ref, onClose});
+  //-----------------------------------
+
+  const handleSubmit = (event:FormEvent)=>{
+    alert(`submitting: "${value}"`)
+    onClose();
+  }
+
+  //----------для рендера в портал----------
+  const node = document.querySelector('#modal_root');
+  if(!node) return null;
+  //----------------------------------------
+
+  return ReactDOM.createPortal((
+    <div className={styles.answerBacksideContainer}>
+      <div className={styles.answerBodyContainer} ref={ref}>
+        <form className={styles.answerForm} method={'post'} onSubmit={preventDefault(stopPropagation(handleSubmit))}>
+          <textarea ref={refTextArea} className={styles.answerTextArea} placeholder={`${name}, оставьте ваш комментарий`} value={value} onChange={(event)=>setValue(event.target.value)}/>
+          <button type='submit' className={styles.answerButton}>Ответить</button>
+        </form>
+      </div>
+    </div>
+  ), node);
+}
+
+//----------------------portal unControlled-----------------------------------------------
+
+export function AnswerModalPortalUncontrolled({name}:IAnswerForm) {
+
+  const refTextArea = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(()=>{//при рендере устанавливается фокус
+    if(refTextArea && refTextArea.current) {//избежание null ошибки
+      refTextArea.current.focus();
+    }
+  },[])
+
+  const handleSubmit = (event:React.FormEvent<HTMLFormElement>)=>{
+    event.preventDefault();
+    console.log('submitting:', event.currentTarget.value)
+  }
+
+  //----------для рендера в портал----------
+  const nodePortal = document.querySelector('#modal_root');
+  if(!nodePortal) return null;
+  //----------------------------------------
+
+  return ReactDOM.createPortal((
+    <div className={styles.modalContainer}>
+      <div className={styles.modalBody}>
+        <form method={'post'} className={styles.container} onSubmit={handleSubmit}>
+          <textarea ref={refTextArea} className={styles.textContainer2} placeholder={`${name}, оставьте ваш комментарий`}/>
+          <div className={styles.panelWithButtonContainer}>
+            <button className={styles.button}>Ответить</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  ), nodePortal);
+}

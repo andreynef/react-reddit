@@ -7,7 +7,7 @@ export const indexHtmlTemplate = (content, token)=>`
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="/static/client.js" type="application/javascript"></script>
     <script>
-      window.__token__ = '${token}';//токен приходит из сервера после аксиос ответа
+      window.__token__ = '${token}';//токен приходит из server.js после аксиос ответа
     </script>
 </head>
 <body>

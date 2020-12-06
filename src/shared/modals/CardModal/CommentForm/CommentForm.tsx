@@ -21,6 +21,7 @@ interface IModalMakeComment {
 }
 
 export function CommentForm({name}:IModalMakeComment) {
+
   const {value, onChange} = useContext(commentContext);
   function handleChange(event:ChangeEvent<HTMLTextAreaElement>){
     onChange(event.target.value);

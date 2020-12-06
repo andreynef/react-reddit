@@ -4,7 +4,7 @@ import {tokenContext} from "../shared/context/tokenContext";
 
 interface IUserData {
   name?: string;
-  iconImg?: string;
+  avaUrl?: string;
 }
 
 export function useUserData () {
@@ -16,7 +16,7 @@ export function useUserData () {
       headers:{Authorization: `bearer ${token}`}
     })
       .then((resp)=>{
-        setData({name:resp.data.name, iconImg:resp.data.icon_img.split("?")[0]})//ловим ответ и сетим ниже только нужные данные. Подробности в доке www.reddit.com/dev/api/oauth
+        setData({name:resp.data.name, avaUrl:resp.data.icon_img.split("?")[0]})//ловим ответ и сетим ниже только нужные данные. Подробности в доке www.reddit.com/dev/api/oauth
       })
       .catch(console.log)
   },[token])

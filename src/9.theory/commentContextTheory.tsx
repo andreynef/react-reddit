@@ -35,9 +35,9 @@ export const commentContext = React.createContext<ICommentContext>({value:'', on
 
                   function AppComponent() {
                     const [commentValue, setCommentValue] = useState('');
-                    const CommentProvider = commentContext.Provider;
+                    const CommentProvider = commentContext.Provider;//либо сразу в рендере <commentContext.Provider> Component </commentContext.Provider>
                     return (
-                      <CommentProvider value={{value:commentValue, onChange: setCommentValue}}>
+                      <CommentProvider value={{value:commentValue, onChange: setCommentValue}}>{/*получает данные, замыкает их в контексте, и передает их люб компоненту*/}
                         <Layout>
                           <CommentTheory/>
                         </Layout>

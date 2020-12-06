@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './main.global.css';
 import {hot} from "react-hot-loader/root";
 import {Layout} from "./shared/Layout";
@@ -6,43 +6,41 @@ import {Content} from "./shared/Content";
 import {CardList} from "./shared/CardsList";
 import {Header} from "./shared/Header";
 import {useToken} from "./myHooks/useToken";
-import {tokenContext} from "./shared/context/tokenContext";
 import {PostsContextProvider} from "./shared/context/postsContext";
-import {commentContext} from "./shared/context/commentContext";
-import {Provider} from 'react-redux';
+import {Provider, useDispatch, useSelector, useStore} from 'react-redux';
 import {createStore} from "redux";
 import {composeWithDevTools} from "redux-devtools-extension";
+import {rootReducer, RootState} from "./Redux/store";
+import {setToken} from "./Redux/actions/actionCreator";
 
 //Прога по генерации шаблонов компонент (установка: npm install -g yo generator-react-ts-component-dir):
 //В консоли набрать: yo react-ts-component-dir BLABLAComp ./src/shared. Пример 'yo react-ts-component-dir [component_name] [path] [--styles] [--less] [--sass]'
 
-const storeTheory = createStore(()=>{}, composeWithDevTools());//composeWithDevTools для соединения стора с хромовским расширением Redux чтобы зыркать все что с происходит со стором.
+const store = createStore(rootReducer, composeWithDevTools());//composeWithDevTools для соединения стора с хромовским расширением Redux чтобы зыркать все что с происходит со стором.
 
 function AppComponent() {
-  const [commentValue, setCommentValue] = useState('');
-  const CommentProvider = commentContext.Provider;
-  const [token] = useToken();//теперь есть токен на клиенте (записан в window.__token__). Далее прокидываем его в пропсы нужн компонентов, либо напрямую используя контекст оборачивая в Provider.
-  // const {Provider} = tokenContext;//создаем контекст и оборачиваем все содержимое App в Provider. Либо создаем свой на основе него.
+  const [token] = useToken();//достать токен из window.__token__ (записан после авторизации).
+  const dispatch = useDispatch();//вызывается внутри компонента обернутого в <Provider>, поэтому в hot.
+  dispatch(setToken(token));//запрос на установку токена в стор
+
   return (
-    <Provider store={storeTheory}>
-      <CommentProvider value={{value:commentValue, onChange: setCommentValue}}>
-        <tokenContext.Provider value={token}>{/*токен контекст для всех компонентов*/}
-          <Layout>
-            <Header/>
-            <Content>
-              <PostsContextProvider>
-                <CardList/>
-              </PostsContextProvider>
-            </Content>
-            {/*<CardModal isOpen={false} id={'some post id'}/>*/}
-          </Layout>
-        </tokenContext.Provider>
-      </CommentProvider>
-    </Provider>
+      <Layout>
+        <Header/>
+        <Content>
+          <PostsContextProvider>
+            <CardList/>
+          </PostsContextProvider>
+        </Content>
+      </Layout>
   );
 }
 
-export const App = hot(()=> <AppComponent/>);// HOC. Если используются Hooks, тобишь UseState итд
+export const App = hot(()=>// HOC. Если используются Hooks, тобишь UseState итд
+  <Provider store={store}>
+    <AppComponent/>
+  </Provider>
+
+);
 // export const App = hot(AppComponent);//если не используются Hooks.
 
 

@@ -25,7 +25,7 @@
 //             <CardList/>
 //           </PostsContextProvider>
 //         </Content>
-//         {/*<CardModal isOpen={false} id={'some post id'}/>*/}
+//         {/*<CommentModal isOpen={false} id={'some post id'}/>*/}
 //       </Layout>
 //     </tokenContext.Provider>
 //   );

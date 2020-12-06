@@ -1,0 +1,13 @@
+.actionButton{
+    display: flex;
+    flex-flow: row nowrap;
+    margin-right: 30px;
+    align-items: center;
+}
+
+.actionButton:hover span, .actionsButton:hover svg path{
+    color: var(--orange);
+    fill: var(--orange);
+    cursor:pointer;
+}
+

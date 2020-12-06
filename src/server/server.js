@@ -3,8 +3,11 @@ import ReactDOM from 'react-dom/server';
 import { indexHtmlTemplate } from './indexHtmlTemplate';
 import {App} from "../App";
 import {getAccessTokenRequest} from "../shared/Reddit";
+import {useDispatch} from "react-redux";
+import {setToken} from "../Redux/actions/actionCreator";
 
 const app = express();//инициализация. Теперь app это instance нашего приложения
+// const dispatch = useDispatch();
 
 app.use('/static', express.static('./dist/client'));//спец роут кот будет раздавать статические файлы. По url'у '/static' будут доступны все файлы кот лежат в папке 'dist/client'.
 
@@ -17,7 +20,7 @@ app.get('/', (req,res) =>{// при обращении на url '/' выдает
 app.get('/auth', (req,res) =>{//при обращении на url '/auth' (со строкой с кодом кот приходит после Reddit авторизации) делается процедура получения токена (запрос на API reddit c определенными параметрами).
   getAccessTokenRequest(req)
     .then(({data})=>{//получаем токен.
-      // data { // то что приходит
+      // data { // то что приходит в ответе:
       //   access_token: '712161124719-R3TVWpHcJWJFGnXNX_o2Fb4A-E8eOg',
       //     token_type: 'bearer',
       //     expires_in: 3600,
@@ -25,7 +28,7 @@ app.get('/auth', (req,res) =>{//при обращении на url '/auth' (со
       //     scope: 'identity read submit'
       // }
       // Теперь сервер имеет токен. Остается его передать клиенту - проброс пропами в HTMLTemplate.       !!!
-      console.log('data[access_token]:',data['access_token']);
+      // console.log('data[access_token]:',data['access_token']);
       res.send(
         indexHtmlTemplate(ReactDOM.renderToString(App()), data['access_token']),
       );
