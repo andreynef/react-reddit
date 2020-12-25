@@ -1,0 +1,68 @@
+.actionsContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    /*justify-content: space-between;*/
+    color: var(--gray99);
+    margin: 10px 0 0 0;
+    position: relative;
+}
+.actionsModalBackside {
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    background-color: red;
+}
+.actionsModalBBody {
+    /*position:absolute;*/
+    /*top:0;*/
+    /*right:0;*/
+    /*bottom:0;*/
+    /*left:0;*/
+    /*background-color: red;*/
+}
+
+/*.actionsContainer span {*/
+/*    color: var(--gray99);*/
+/*    font-size: 14px;*/
+/*}*/
+
+/*.actionsContainer svg {*/
+/*    margin-right: 8px;*/
+/*}*/
+
+/*.actionsList {*/
+/*    display: flex;*/
+/*    flex-flow: row nowrap;*/
+/*    justify-content: space-between;*/
+/*}*/
+
+/*.actionsItem{*/
+/*    display: flex;*/
+/*    flex-flow: row nowrap;*/
+/*    margin-right: 30px;*/
+/*    align-items: center;*/
+/*}*/
+
+/*.actionsItem *:hover{*/
+/*    cursor: pointer;*/
+/*    color: var(--orange);*/
+/*}*/
+
+/*.actionsItem:hover path {*/
+/*    fill: var(--orange);*/
+/*}*/
+
+.actionButton{
+    display: flex;
+    flex-flow: row nowrap;
+    margin-right: 30px;
+    align-items: center;
+}
+
+.actionButton:hover span, .actionsButton:hover svg path{
+    color: var(--orange);
+    fill: var(--orange);
+    cursor:pointer;
+}

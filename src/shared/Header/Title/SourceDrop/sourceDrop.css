@@ -1,0 +1,76 @@
+.button {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    width:100%;
+    background-color: var(--white);
+    padding: 11px 20px;
+    border-radius: 7px;
+    /*border: 1px solid #000000;*/
+    justify-content: space-between;
+}
+.button *{
+    color: var(--orange);
+    fill:var(--orange);
+}
+.buttonText {
+    display: flex;
+    align-items: center;
+}
+.dropdownWrapper {
+    position: relative;
+    /*border: 1px solid #000000;*/
+}
+.dropdownContainer {
+    position:absolute;
+    left: 0;
+    top: 0;
+    border-radius: 0 0 7px 7px;
+    background-color: var(--white);
+    z-index: 10;
+    width: 100%;
+}
+.dropdownButtonsContainer {
+    padding: 0 20px;
+}
+.actionButton {
+    padding: 12px 0;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    border-bottom: 1px solid #ECECEC;
+    width: 100%;
+    outline: none;
+}
+.actionButton:last-child {
+    border-bottom: none;
+}
+.actionButton:first-child {
+    border-top: 1px solid #ECECEC;
+}
+.actionButton:hover span, .actionButton:hover svg path{
+    color: var(--orange);
+    fill: var(--orange);
+    cursor: pointer;
+}
+
+.dropdownCloseButton {
+    background-color: var(--grayD9);
+    padding: 12px 23px;
+    border-radius: 0 0 3px 3px;
+    width: 100%;
+}
+
+@media all and (min-width: 1024px) {
+    .button {
+        width:unset;
+        background-color: unset;
+    }
+    .dropdownContainer {
+        border-radius: 7px;
+        width: 200px;
+    }
+    .actionButton span{
+        font-size: 20px;
+    }
+}
