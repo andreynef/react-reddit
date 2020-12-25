@@ -64,12 +64,12 @@ function AppComponent() {//макс начало где можно испть т
           <Layout>
             <Header/>
             <Content>
-              {/*<Route exact path={"/"}>*/}
-              {/*   <CardList/>*/}
-              {/*</Route>*/}
-              {/*<Route path={"/auth/"}>*/}
-              {/*   <CardList/>*/}
-              {/*</Route>*/}
+              <Route exact path={"/"}>
+                 <CardList/>
+              </Route>
+              <Route path={"/auth/"}>
+                 <CardList/>
+              </Route>
               {/*<Route path={["/saved"]}>*/}
               {/*  <CardListBookmark/>*/}
               {/*</Route>*/}

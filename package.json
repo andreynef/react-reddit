@@ -21,7 +21,6 @@
     "csstype": "^2.6.11",
     "express": "^4.17.1",
     "fetch": "^1.1.0",
-    "material-ui-upload": "^1.2.1",
     "nodemon": "^2.0.4",
     "query-string": "^6.13.7",
     "ramda": "^0.27.1",

@@ -1,5 +1,5 @@
 import React from "react";
-import {UseEffectTestComponent} from "../_______________________THEORY/5.theory/UseEffectTestComponent";
+// import {UseEffectTestComponent} from "../_______________________THEORY/5.theory/UseEffectTestComponent";
 
 // Какие бывают хуки: (Не работают на сервере, тоесть всякие маунты не происходят. Поэтому можно использовать свой useIsMounted для подачи знака что чтото примонтировано = правильнй метод если хотим использовать if)
 //
