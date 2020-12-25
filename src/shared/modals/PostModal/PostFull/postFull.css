@@ -1,40 +1,30 @@
-.modalContainer {
-     position: fixed;
-     top: 0;
-     bottom: 0;
-     left: 0;
-     right: 0;
-     background: rgba(0,0,0,0.5);
-     display: flex;
-     justify-content: center;
-     padding: 5rem;
-     z-index: 100;
-    /*scroll-behavior: revert;*/
- }
-
-.modalBody {
-    padding: 53px 70px;
-    width: 960px;
+.postFullBackside {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    z-index: 100;
+    width:100%;
+    background-color: rgba(0,0,0,0.5);
+}
+.postFullContainer {
+    /*margin: 5em 0;!*для отступа от верха и снизу*!*/
+    padding: 60px 20px;
+    max-width: 960px;
     height: 100%;
     border-radius: 7px;
     background-color: var(--white);
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);/*x y wide color*/
-    position: relative;
+    position: relative;/*для крестика*/
     overflow: auto;
 }
 
-.cardModalContainer {
-     position: absolute;
-     margin: 5rem 5rem;
-     top: 0;
-     bottom: 0;
-     left: 0;
-     right: 0;
-    padding: 5rem;
 
-    background: grey;
-     display: flex;
-     flex-flow: column nowrap;
-     z-index: 100;
- }
-
+@media all and (min-width: 763px) {
+    .postFullContainer {
+        padding: 53px 70px;
+    }
+}

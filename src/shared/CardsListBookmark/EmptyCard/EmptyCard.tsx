@@ -3,12 +3,8 @@ import styles from './emptycard.css';
 import {ArrowFilledIcon, MenuIcon} from "../../Icons";
 import {Break} from "../../supportingComponents/Break";
 
-interface ICardProps {
-  isSaved?: boolean;
-  id?: string;
-}
 
-export function EmptyCard({id, isSaved}:ICardProps) {
+export function EmptyCard() {
   return (
     <li className={styles.emptyCard}>
 

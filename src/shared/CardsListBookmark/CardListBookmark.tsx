@@ -1,75 +1,56 @@
-import React, {useEffect, useRef, useState} from 'react';
-import styles from './cardlist.css';
+import React from 'react';
+import styles from './cardlistBookmark.css';
 import {GenericList} from "../../utils/GenericList";
-import {Card} from "./Card";
-import {CircleLoader} from "../img/CircleLoader";
-import {useDispatch, useSelector} from "react-redux";
-import {IPost, postListRequestThunk} from "../../Store/Posts/postsActions";
+import {useSelector} from "react-redux";
+import {IPost} from "../../Store/Posts/postsActions";
 import {IInitialState} from "../../Store/initialState";
+import {Card} from "../CardsList/Card";
+import {EmptyCard} from "./EmptyCard";
+import {FaceHmm} from "./FaceHmm";
 
-export function CardList() {
+export function CardListBookmark() {
+  console.log('in CardListBookmark')
 
-  let list;
-  const bookmark = useSelector<IInitialState,string>(state => state.bookmark);
-  if(bookmark==='saved'){
-    list = useSelector<IInitialState>(state => state.savedPosts)
-  }else if (bookmark==='myposts'){
-    list = useSelector<IInitialState>(state => state.myPosts)
-  }else if (bookmark==='seen'){
-    list = useSelector<IInitialState>(state => state.seenPosts)
-  }else if (bookmark==='commented'){
-    list = useSelector<IInitialState>(state => state.commentedPosts)
-  }else{
-    list = useSelector<IInitialState,IPost[]>(state => state.posts.list);
-  }
+  const list = useSelector<IInitialState,IPost[]>(state => state.posts.list);
 
-  const isLoading = useSelector<IInitialState,boolean>(state => state.posts.isLoading);
-  const dispatch = useDispatch();
+  const pathname = window.location.pathname.split("/")[1];
 
-  const bottomEl = useRef<HTMLDivElement>(null);
+  let filteredList;
 
-  useEffect(()=>{//хук по проверке достижения днища.
-    const observer = new IntersectionObserver((entries)=>{
-      if (entries[0].isIntersecting){//наблюдаемый элемент лежащий в позиции [0] находится в зоне видимости.
-        dispatch(postListRequestThunk())
-        console.log('loading more');
-      }
-    },{
-      rootMargin:'50px',//расстояние от дна окна.
-    });
-
-    if(bottomEl.current){//если bottomEl отрендерен - наблюдать
-      observer.observe(bottomEl.current)
-    }
-    return ()=>{//затирка старого слушателя т.к. далее рендер нового элемента и соотв нов слуш.
-      if(bottomEl.current){
-        observer.unobserve(bottomEl.current)
-      }
-    }
-  },[])
+  if(pathname==='saved'){
+    filteredList = list.filter(item=>(item.isSaved));
+  }else if (pathname==='myposts'){
+    filteredList = list.filter(item=>(item.isMyPost));
+  }else if (pathname==='seen'){
+    filteredList = list.filter(item=>(item.isSeen));
+  }else if (pathname==='commented'){
+    filteredList = list.filter(item=>(item.isCommented));
+  }else return null
+  console.log('filteredList:',filteredList)
 
   return (
 
     <ul className={styles.cardList}>
-
-      {list.length === 0 && !isLoading  &&(//--------------!!!!!!!!!!
-        <div role={'alert'} style={{textAlign:'center'}}>
-          Нет ни одного поста
-        </div>
-      )}
-
-      <GenericList list={list.map((item)=>(
-        {
-          id:item.id,
-          children: <Card item={item}/>,
-          className:styles.card
-        }
-      ))
-      }/>
-
-      {isLoading && <div style={{textAlign:'center'}}><CircleLoader/></div>}
-
-      <div ref={bottomEl}/>
+      {filteredList.length >0
+        ?
+        <GenericList list={filteredList.map((item)=>(
+          {
+            id:item.id,
+            children: <Card item={item}/>,
+            className:styles.card
+          }
+        ))
+        }/>
+        :
+        <>
+          <EmptyCard/>
+          <EmptyCard/>
+          <EmptyCard/>
+          <EmptyCard/>
+          <EmptyCard/>
+          <FaceHmm/>
+        </>
+      }
 
     </ul>
   )

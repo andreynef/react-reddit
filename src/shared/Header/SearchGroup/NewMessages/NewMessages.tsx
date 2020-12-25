@@ -5,24 +5,22 @@ import {Icon} from "../../../supportingComponents/Icon";
 import {EIcons} from "../../../../utils/enums/EIcons";
 import {Text} from "../../../supportingComponents/Text";
 import {EColors} from "../../../../utils/enums/EColors";
-import {useDispatch, useSelector, useStore} from "react-redux";
-import {RootState} from "../../../../Redux/store";
-import {setToken} from "../../../../Redux/actions/actionCreator";
+import {useSelector} from "react-redux";
+import {IInitialState} from "../../../../Store/initialState";
 
 export function NewMessages() {
 
-  const newMessages = 8;
+  const inbox_count = useSelector<IInitialState, number>(state => state.profile.data.inbox_count);
 
-  const dispatch = useDispatch();
-
-  const handleClick = () => {
-    dispatch(setToken(`storeToken: new token`));
+  const handleClick = (e:any) => {
+    alert('msg icon clicked')
+    // console.log(event.target)
   }
 
   return (
     <button className={styles.messagesButton} onClick={handleClick}>
       <div className={styles.messagesTextContainer}>
-        <Text size={12} color={EColors.white}>{newMessages}</Text>
+        <Text size={12} color={EColors.white}>{inbox_count}</Text>
       </div>
       <Break size={4}/>
       <Icon name={EIcons.envelope} />

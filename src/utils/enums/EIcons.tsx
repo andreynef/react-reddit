@@ -1,6 +1,7 @@
 export enum EIcons {
   block = 'block',
   comment = 'comment',
+  cross = 'cross',
   share = 'share',
   save = 'save',
   warning = 'warning',

@@ -4,14 +4,15 @@ import {KarmaCounter} from "./KarmaCounter";
 import {Actions} from "./Actions";
 import {CommentsButton} from "./CommentsButton";
 
-interface IControls {
+interface ICardControlsProps {
   commentsAmount: number;
+  score?:number;
 }
 
-export function CardControls({commentsAmount}:IControls) {
+export function CardControls({commentsAmount, score}:ICardControlsProps) {
   return (
     <div className={styles.controls}>
-      <KarmaCounter/>
+      <KarmaCounter score={score}/>
       <div className={styles.controlsCommentsContainer}>
         <CommentsButton commentsAmount={commentsAmount}/>
       </div>

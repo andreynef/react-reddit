@@ -1,12 +1,6 @@
 .container {
     position: absolute;
-    right: 20px;
+    right: 30px;
     top: 30px;
-    /*position: sticky;*/
-    /*float: right;*/
 }
 
-.container svg {
-    width: 20px;
-    height: 20px;
-}

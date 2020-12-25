@@ -1,11 +1,16 @@
 //универсальный компонент-шаблон с логикой DropdownNoAbsolute. Контейнер с 2мя блоками (на что жать и что выпадает). Без стилей, только логика.
 
-import React, {useEffect, useState} from 'react';
+import React, {EventHandler, useEffect, useRef, useState} from 'react';
 import styles from './dropdown.css';
-import {CrossIcon} from "../Icons";
-import ReactDOM from "react-dom";
-import { usePortalZone } from '../../myHooks/usePortalZone';
-import {CardModal} from "../modals/CardModal";
+import {Portal} from "../../utils/Portal";
+import {useHistory} from "react-router-dom";
+import {useOutsideClick} from "../../myHooks/useOutsideClick";
+import {
+  disableBodyScroll,
+  enableBodyScroll,
+  hiddenBodyScroll,
+  visibleBodyScroll
+} from "../../utils/react/scrollBlocker";
 
 const NOOP = () => {};//ф кот ничего не делает. Обертка.
 
@@ -16,51 +21,63 @@ interface IDropdownProps {
   onOpen?: ()=> void;//нужен для контроля "сверху". Listeners.
   onClose?: ()=> void;//нужен для контроля "сверху". Listeners.
   isInline?:boolean;
+  local?:boolean;
+  classNameContainer?:string;
+  classNameButton?:string;
+  classNameChildrenContainer?:string;
+  arrowIcon?:React.ReactNode;
 }
 
-export function Dropdown ({button, children, isOpen, onClose=NOOP, onOpen=NOOP, isInline=false}: IDropdownProps) {
+export function Dropdown ({button, children, isOpen, onClose=NOOP, onOpen=NOOP, isInline=false, local=false, arrowIcon, classNameButton, classNameContainer, classNameChildrenContainer}: IDropdownProps) {
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(isOpen);
+  const [x, setX] = useState('');
+  const [y, setY] = useState('');
 
-  useEffect(()=> {
+  useEffect(()=> {//отвечает за приходящий сверху стейт откр/закр
     setIsDropdownOpen(isOpen)
-    // console.log('setting local state to what comes from store. Deps:[storeState]')
-  },//отвечает за приходящий сверху стейт откр/закр
-    [isOpen]);
+  }, [isOpen]);
 
-  useEffect(()=> {
+  useEffect(()=> {//нажатие много раз кнопку меню - вкл/выкл.
     isDropdownOpen ? onOpen() : onClose()
-      // console.log('doing smth depending on local state. Deps:[localState]')
-    },//отвечает за локальный стейт копирующий состояние сверху.
-    [isDropdownOpen]);
+    }, [isDropdownOpen]);
 
-  const handleOpen =()=>{
-    if (isOpen === undefined) {
+  const handleOpen =(e:any)=>{
+    // if (isOpen === undefined) {
       setIsDropdownOpen(!isDropdownOpen)
-    }
+    // }
+    setX(e.target.getBoundingClientRect().x)//установка координат клика -> рендер привязан к стейту: рендер там где установлены координаты
+    setY(e.target.getBoundingClientRect().y)
+  }
+  const handleClose =()=>{
+    setIsDropdownOpen(false)
   }
 
-  //----------для рендера в портал----------
-        const [node] = usePortalZone();
-        if(!node) return null;
-  //----------------------------------------
+  //--------для клика снаружи----------
+  const ref = useRef<HTMLDivElement>(null);
+  useOutsideClick(ref, ()=>{setIsDropdownOpen(false)});
+  //-----------------------------------
 
   return (
-    <div className={styles.dropdownContainer}>
-      <div onClick={handleOpen}>
+    <div className={classNameContainer} ref={ref}>{/*сам элемент в основном потоке*/}
+      <button onClick={handleOpen} className={classNameButton} style={isDropdownOpen ? {borderBottomRightRadius:'0', borderBottomLeftRadius:'0'}:{}}>
         {button}
-      </div>
+        <div style={{transform:isDropdownOpen?'rotate(180deg)':'unset'}}>{arrowIcon}</div>
+      </button>
 
-      {isDropdownOpen && (
-            <div className={styles.listContainer}>
-              {
-                ReactDOM.createPortal((
-                  <div className={styles.list} onClick={()=>setIsDropdownOpen(false)}>
-                    {children}
-                  </div>
-                ), node)
-              }
+      {isDropdownOpen && !local &&(
+        <Portal
+          children={
+            <div style={{position:'fixed', top:`${y}px`, left:`${x}px`, zIndex:100}} onClick={handleClose} className={classNameChildrenContainer}>
+              {children}
             </div>
+          }
+          />
+      )}
+      {isDropdownOpen && local &&(
+        <div onClick={handleClose} className={classNameChildrenContainer}>
+          {children}
+        </div>
       )}
     </div>
   );

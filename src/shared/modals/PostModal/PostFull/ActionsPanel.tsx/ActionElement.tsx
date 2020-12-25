@@ -1,7 +1,7 @@
 import React, {ReactNode} from 'react';
 import styles from './actionElement.css';
-import {Icon} from "../../../supportingComponents/Icon";
-import {EIcons} from "../../../../utils/enums/EIcons";
+import {Icon} from "../../../../supportingComponents/Icon";
+import {EIcons} from "../../../../../utils/enums/EIcons";
 
 interface IActionElement {
   text: string;

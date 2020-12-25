@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './searchgroup.css';
 import {NewMessages} from "./NewMessages";
-import {UserBlock} from "../UserBlock";
+import {UserBlock} from "./UserBlock";
 import {SearchBlock} from "./SearchBlock";
-import {UserContextProvider} from "../../context/userContext";
 
 export function SearchGroup() {
+
   return (
     <div className={styles.searchGroup}>
       <UserBlock/>

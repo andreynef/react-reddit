@@ -31,7 +31,7 @@ export function useOnClickOutside(ref, handler) {
 
 
 
-// Usage
+// // Usage
 // function Modal() {
 //   // Create a ref that we add to the element for which we want to detect outside clicks
 //   const ref = useRef();

@@ -1,26 +1,27 @@
 import React from 'react';
 import styles from './commentsfullmodal.css';
-import {HeaderMeta} from "../HeaderModal/HeaderTextBlock/HeaderMeta";
 import {CommentItem} from "./CommentedItem";
-import {Break} from "../../../supportingComponents/Break";
-import {Card} from "../../../CardsList/Card";
-import {GenericList} from "../../../../utils/GenericList";
+import {GenericList} from "../../../../../utils/GenericList";
+import {useSelector} from "react-redux";
+import {IInitialState} from "../../../../../Store/initialState";
+import {IComment} from "../../../../../Store/Comments/commentsActions";
 
 
 export function CommentsList() {
 
+  const commentsList = useSelector<IInitialState, IComment[]>(state => state.comments.list);
+
+  console.log('commentsList got from store:', commentsList);
+
   return (
     <ul className={styles.list}>
-      {/*<GenericList list={list.map((item)=>(*/}
-      {/*  {*/}
-      {/*    id:item.id,*/}
-      {/*    children: <CommentItem/>,*/}
-      {/*  }*/}
-      {/*))*/}
-      {/*}/>*/}
-      <CommentItem/>
-      <CommentItem/>
-      <CommentItem/>
+      <GenericList list={commentsList.map((item:IComment)=>(
+        {
+          id:item.id,
+          children: <CommentItem item={item}/>,
+        }
+      ))
+      }/>
     </ul>
   );
 }

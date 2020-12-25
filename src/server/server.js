@@ -2,20 +2,17 @@ import express from 'express';
 import ReactDOM from 'react-dom/server';
 import { indexHtmlTemplate } from './indexHtmlTemplate';
 import {App} from "../App";
-import {getAccessTokenRequest} from "../shared/Reddit";
-import {useDispatch} from "react-redux";
-import {setToken} from "../Redux/actions/actionCreator";
-
+import {getAccessTokenRequest} from "../Reddit/Reddit";
+const cors = require("cors");
 const app = express();//инициализация. Теперь app это instance нашего приложения
-// const dispatch = useDispatch();
+
+app.use(cors());
+// app.use(cors({
+//   origin: true,
+//   credentials: true
+// }));
 
 app.use('/static', express.static('./dist/client'));//спец роут кот будет раздавать статические файлы. По url'у '/static' будут доступны все файлы кот лежат в папке 'dist/client'.
-
-app.get('/', (req,res) =>{// при обращении на url '/' выдает ответ шаблона html c рендером App.
-    res.send(
-        indexHtmlTemplate(ReactDOM.renderToString(App())),
-    );
-});
 
 app.get('/auth', (req,res) =>{//при обращении на url '/auth' (со строкой с кодом кот приходит после Reddit авторизации) делается процедура получения токена (запрос на API reddit c определенными параметрами).
   getAccessTokenRequest(req)
@@ -34,6 +31,12 @@ app.get('/auth', (req,res) =>{//при обращении на url '/auth' (со
       );
     })
     .catch(console.log);
+});
+
+app.get('*', (req,res) =>{// при обращении на url '/' выдает ответ шаблона html c рендером App. Заменили на * для роутинга. Типа все что не пришло в /static и /auth идет сюда.
+  res.send(
+    indexHtmlTemplate(ReactDOM.renderToString(App())),
+  );
 });
 
 app.listen(3000, ()=>{

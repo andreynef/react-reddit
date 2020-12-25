@@ -1,24 +1,21 @@
-.headerContainer {
+.topContainer {
     display: flex;
     flex-flow: column nowrap;
     padding-bottom: 20px;/*сер поле между */
 }
 
-
-
-
 @media all and (min-width: 1024px) {
-    .headerContainer {
-        flex-flow: row nowrap;
-        padding: 40px 40px 15px 40px;
+    .topContainer {
+        flex-flow: row wrap;
+        padding: 40px 40px 40px 40px;
         justify-content: space-between;
     }
 
 }
 
-@media all and (min-width: 1540px){
-    .headerContainer {
-        padding: 70px 0;
-    }
+/*@media all and (min-width: 1540px){*/
+/*    .headerContainer {*/
+/*        padding: 70px 0 0 0;*/
+/*    }*/
 
-}
+/*}*/

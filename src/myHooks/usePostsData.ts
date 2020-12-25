@@ -1,5 +1,7 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
+import {useSelector} from "react-redux";
+import {IInitialState} from "../Store/initialState";
 
 interface IPostsData {
   list: IPost[];
@@ -14,6 +16,8 @@ interface IPost {
     karma: number,
     commentsAmount: number,
     isSaved: boolean,
+    thumbnail: string,
+
 }
 
 
@@ -29,6 +33,7 @@ export function usePostsData () {
       'karma': 25,
       'commentsAmount': 25,
       'isSaved': true,
+      'thumbnail': obj.thumbnail,
     }
   }
 
@@ -36,6 +41,9 @@ export function usePostsData () {
 
   useEffect(()=>{//1раз/прогон без токена, 2раз с токеном.
     axios.get('https://www.reddit.com/best.json',{
+      params:{
+        limit:10
+      }
     })
       .then((resp)=>{
         const dataArr = resp.data.data.children.map((item:any)=>getFewKeys(item.data))

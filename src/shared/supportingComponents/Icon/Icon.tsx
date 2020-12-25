@@ -17,7 +17,7 @@ import {
   RocketIcon,
   SearchIcon,
   StatisticIcon,
-  EnvelopeIcon
+  EnvelopeIcon, CrossIcon
 } from "../../Icons";
 import {EIcons} from "../../../utils/enums/EIcons";
 import {ArrowARightIcon} from "../../Icons/ArrowARightIcon";
@@ -33,6 +33,7 @@ import {MountainsIcon} from "../../Icons/MountainsIcon";
 import {PaperIcon} from "../../Icons/PaperIcon";
 import {PdfIcon} from "../../Icons/PdfIcon";
 import classNames from "classnames";
+import {EColors} from "../../../utils/enums/EColors";
 
 export interface IIconProps {
   name?: EIcons;
@@ -40,6 +41,7 @@ export interface IIconProps {
   mobileSize?: ISizes;
   tabletSize?: ISizes;
   desktopSize?: ISizes;
+  // color?:EColors;
 }
 
 type ISizes = 20 | 18 | 16  | 14 | 12 | 10;
@@ -53,10 +55,10 @@ export function Icon(props: IIconProps) {
     {[styles[`m${mobileSize}`]]: mobileSize},
     {[styles[`d${desktopSize}`]]: desktopSize},
     {[styles[`t${tabletSize}`]]: tabletSize},
-    // styles[color],
+    // styles['color'],
   );
   return (
-    <div className={classes}>
+    <div className={classes} >
       {name === 'menu' && <MenuIcon/>}
       {name === 'block' && <BlockIcon/>}
       {name === 'comment' && <CommentIcon/>}
@@ -86,6 +88,7 @@ export function Icon(props: IIconProps) {
       {name === 'rocket' && <RocketIcon/>}
       {name === 'search' && <SearchIcon/>}
       {name === 'statistic' && <StatisticIcon/>}
+      {name === 'cross' && <CrossIcon/>}
     </div>
   );
 }

@@ -1,6 +1,5 @@
 import {Reducer} from "redux";
 import {
-  IUserData,
   PROFILE_REQUEST,
   PROFILE_REQUEST_ERROR, PROFILE_REQUEST_SUCCESS,
   ProfileRequestAction,
@@ -8,12 +7,6 @@ import {
   ProfileRequestSuccessAction
 } from "./profileActions";
 import {RootStateOrAny} from "react-redux";
-
-export type ProfileState = {
-  loading:boolean,
-  error: string,
-  data:IUserData,
-}
 
 type ProfileActions =
   ProfileRequestSuccessAction |
@@ -34,6 +27,7 @@ export const profileReducer: Reducer<RootStateOrAny, ProfileActions> = (state, a
         ...state,
         data: action.data,
         loading: false,
+        isAuth: true,
       };
 
     case PROFILE_REQUEST_ERROR:

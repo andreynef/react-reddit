@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './exitbuttonmodal.css';
-import {CrossIcon} from "../../../Icons";
+import {Icon} from "../../../../supportingComponents/Icon";
+import {EIcons} from "../../../../../utils/enums/EIcons";
 
 
 interface IProps {
@@ -10,7 +11,7 @@ interface IProps {
 export function ExitButtonModal(props:IProps) {
   return (
     <button className={styles.container} onClick={()=>props.onClose()}>
-      <CrossIcon/>
+      <Icon name={EIcons.cross} size={20}/>
     </button>
   );
 }

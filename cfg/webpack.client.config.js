@@ -64,7 +64,19 @@ module.exports = {
             {
                 test: GLOBAL_CSS_REGEXP,// матчить только их. И тжсм сделать в серверной чести но без style
                 use: ["style-loader", "css-loader"]
-            }
+            },
+            // {
+            //     test: /\.(png|jpe?g|gif)$/i,
+            //     use: [
+            //         {
+            //             loader: 'file-loader',
+            //         },
+            //     ],
+            // },
+            // {
+            //     test: /\.svg$/,
+            //     use: ['@svgr/webpack'],
+            // },
         ]
     },
     devtool: setupDevtool(),

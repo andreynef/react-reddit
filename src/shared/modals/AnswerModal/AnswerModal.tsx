@@ -1,5 +1,5 @@
 import React, {ChangeEvent, FormEvent, useEffect, useRef, useState} from 'react';
-import styles from './commentModal.css';
+import styles from './answerModal.css';
 import ReactDOM from 'react-dom';
 import {useOutsideClick} from "../../../myHooks/useOutsideClick";
 import {usePortalZone} from "../../../myHooks/usePortalZone";
@@ -10,44 +10,43 @@ import {closeAnswerAC, submitAnswerThunk, updateCommentAC} from "../../../Store/
 import {useOnClickOutside} from "../../../myHooks/useOnClickOutside";
 import {CommentForm} from "../PostModal/PostFull/CommentForm";
 import { useHistory } from 'react-router-dom';
-import {PostsSourceDrop} from "../../Header/Thread/PostsSourceDrop";
 import {Portal} from "../../../utils/Portal";
+import {IComment} from "../../../Store/Comments/commentsActions";
+import {ICommentItem} from "../PostModal/PostFull/CommentsFullModal/CommentedItem";
 
 
-export function CommentModal() {
-  const dispatch = useDispatch();
-  const data = useSelector<IInitialState, ICommentModal>(state=>state.commentModal);
-  const isAnswerOpen = useSelector<IInitialState, boolean>(state=>state.isAnswerOpen);
+interface IAnswerModal {
+  item: IComment,
+  onClose:()=>void,
+}
+
+export function AnswerModal({item, onClose}:IAnswerModal) {
   const [value, setValue]=useState('');
-  console.log('im rendered')
+
   function handleChange (event:ChangeEvent<HTMLTextAreaElement>){
     setValue(event.target.value);
   }
 
   function handleSubmit (event:FormEvent){
     event.preventDefault();
-    // alert('submitted :'+ value);
-    dispatch(submitAnswerThunk(data.commentId,value));
+    alert(`submitted value:"${value}", id:"${item.id}"`);
+    onClose();
   }
   //--------для клика снаружи-----------------------------
         const ref = useRef<HTMLDivElement>(null);
-        useOnClickOutside(ref, ()=>dispatch(closeAnswerAC()));// или useOutsideClick
+        useOnClickOutside(ref, onClose);// или useOutsideClick
   //------------------------------------------------------
 
   return (
-    <>
-      {isAnswerOpen &&(
-        <div className={styles.modalContainer} >{/*задний фон*/}
-          <div ref={ref}>{/*обертка для самой модалки*/}
-            <CommentForm//многоразовая форма
-              author={data.author}
-              value={value}
-              onChange={handleChange}
-              onSubmit={handleSubmit}
-            />
-          </div>
-        </div>
-      )}
-    </>
+    <div className={styles.modalContainer} >{/*задний фон*/}
+      <div ref={ref}>{/*обертка для самой модалки*/}
+        <CommentForm//многоразовая форма
+          author={item.author}
+          value={value}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+        />
+      </div>
+    </div>
 );
 }

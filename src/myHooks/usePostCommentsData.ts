@@ -21,33 +21,21 @@ interface IPost {
 }
 
 
-export function usePostsData () {
+export function usePostsCommentsData (id:string) {
 
-  function getFewKeys (obj:IPost) {
-    return {
-      'author': obj.author,
-      'id': obj.id,
-      'data': new Date (obj.created).toLocaleString('ru'),
-      'avatar': "https://copypast.ru/fotografii/foto_zhivotnih/jivotnye_v_obraze_znamenitostej_0_/jivotnye_v_obraze_znamenitostej_0_027.jpg",
-      'title': obj.title,
-      'karma': 25,
-      'commentsAmount': 25,
-      'isSaved': true,
-      'preview': obj.thumbnail,
-    }
-  }
-
-  const [data, setData] = useState<any>({});//создание своего локального стейта
-
-  useEffect(()=>{//1раз/прогон без токена, 2раз с токеном.
-    axios.get('https://www.reddit.com/best.json',{
+  const [data, setData] = useState<any>([]);//создание своего локального стейта
+  const source = useSelector<IInitialState>(state => state.posts.source)//достать токен из store
+  useEffect(()=>{
+    axios.get(`https://www.reddit.com${source}/comments/${id}.json`,{
       params:{
-        limit:10
+        limit:10,
+        depth: 5,
       }
     })
       .then((resp)=>{
-        const dataArr = resp.data.data.children.map((item:any)=>getFewKeys(item.data))
-        setData({list:dataArr})
+        console.log('resp comment:',resp);
+        const dataArr = resp.data[1].data.children;
+        setData(dataArr)
       })
       .catch(console.log)
   },[])

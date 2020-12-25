@@ -1,11 +1,17 @@
 import {Action, ActionCreator} from "redux";
 import {ThunkAction} from "redux-thunk";
 import axios from "axios";
-import {IinitialState} from "../initialState";
+import {IInitialState, initialState, IProfileData} from "../initialState";
+import {useSelector} from "react-redux";
 
 export const POSTLIST_REQUEST = 'POSTLIST_REQUEST';
 export const POSTLIST_REQUEST_SUCCESS = 'POSTLIST_REQUEST_SUCCESS';
 export const POSTLIST_REQUEST_ERROR = 'POSTLIST_REQUEST_ERROR';
+export const POST_TOGGLE_SAVE = 'POST_TOGGLE_SAVE';
+export const POST_SEEN = 'POST_SEEN';
+export const POSTCARD_TOGGLE_VISIBLE = 'POSTCARD_TOGGLE_VISIBLE';
+export const SET_SOURCE = 'SET_SOURCE';
+
 
 export type PostListRequestAction = {
   type: typeof POSTLIST_REQUEST ;
@@ -19,6 +25,22 @@ export type PostListRequestErrorAction = {
   type: typeof POSTLIST_REQUEST_ERROR ;
   error: string,
 }
+export type PostToggleSaveACtion = {
+  type: typeof POST_TOGGLE_SAVE ;
+  id: string,
+}
+export type PostSeenACtion = {
+  type: typeof POST_SEEN ;
+  id: string,
+}
+export type PostCardToggleVisibleAction = {
+  type: typeof POSTCARD_TOGGLE_VISIBLE ;
+  id:string,
+}
+export type SetSourceAction = {
+  type: typeof SET_SOURCE ;
+  source:string,
+}
 
 export interface IPost {
   id: string,
@@ -29,10 +51,16 @@ export interface IPost {
   karma: number,
   commentsAmount: number,
   isSaved: boolean,
+  isMyPost: boolean,
+  isCommented: boolean,
+  isSeen: boolean,
+  isVisible: boolean,
   thumbnail: string,
-  preview: string,
+  preview2: string,
   url:string,
   score:number,
+  subreddit:string,
+  permalink: string,
 }
 export const postListRequestAC: ActionCreator<PostListRequestAction> = () => ({
   type: POSTLIST_REQUEST,
@@ -49,11 +77,35 @@ export const postListRequestErrorAC: ActionCreator<PostListRequestErrorAction> =
   error,
 });
 
+export const postToggleSaveAC: ActionCreator<PostToggleSaveACtion> = (id:string) => ({
+  type: POST_TOGGLE_SAVE,
+  id,
+});
+
+export const postSeenAC: ActionCreator<PostSeenACtion> = (id:string) => ({
+  type: POST_SEEN,
+  id,
+});
+
+export const postCardToggleVisibleAC: ActionCreator<PostCardToggleVisibleAction> = (id:string) => ({
+  type: POSTCARD_TOGGLE_VISIBLE,
+  id,
+});
+
+export const setSourceAC: ActionCreator<SetSourceAction> = (source:string) => ({
+  type: SET_SOURCE,
+  source,
+});
+
+
 // Thunk: запроc данных в Reddit о списке постов -> успех или ошибка
 
-export const postListRequestThunk = ():ThunkAction<void, IinitialState, unknown, Action>=>(dispatch, getState)=> {//типизация из документации
+
+export const postListRequestThunk = ():ThunkAction<void, IInitialState, unknown, Action>=>(dispatch, getState)=> {//типизация из документации
+  const source = getState().posts.source;
   dispatch(postListRequestAC());//пока что тупо переключает лоадинг на true
-  axios.get(`https://www.reddit.com/best.json?sr_detail=true`,{//https://www.reddit.com/user/${author}/about.json
+  console.log('requesting source:', source)
+  axios.get(`https://www.reddit.com/${source}.json?sr_detail=true`,{//https://www.reddit.com/user/${author}/about.json
     headers: {
       // 'Content-type':'application/x-www-form-urlencoded',
       // 'Access-Control-Allow-Origin': '*',
@@ -65,9 +117,9 @@ export const postListRequestThunk = ():ThunkAction<void, IinitialState, unknown,
     }
   })
     .then((resp) => {
-      console.log('resp:', resp)
-      const responseFilteredListArr = resp.data.data.children.map((item:any)=>getPostObjWithFewKeys(item.data));//выковыриваем нужные данные
+      const responseFilteredListArr = resp.data.data.children.map((item:any)=>getPostFewKeys(item.data));//выковыриваем нужные данные
       dispatch(postListRequestSuccessAC(responseFilteredListArr, resp.data.data.after));//2 данные, сам лист и метка
+      console.log('resp postList:', resp.data.data.children)
     })
     .catch((error)=>{
       console.log("error from request:",error);
@@ -75,30 +127,40 @@ export const postListRequestThunk = ():ThunkAction<void, IinitialState, unknown,
     })
 }
 
-// export const rAddAC = () => {//ф создающая запрос в Unsplash.
-//   return (dispatch,getState) => {//2м аргументом идет стейт, если нужен.
-//     unsplash.photos.listPhotos(counterPages(), 10, "latest")//counterPages() это число кот кажд раз при вызове увеличся на 1.
-//       .then(toJson)
-//       .then(json => {//arr ответ
-//         console.log('got json answer from add:', json)
-//         dispatch(addSuccess(json))//отправка действия dispatch кот необходима для Redux.
-//       })
-//   }
-// }
-
-export function getPostObjWithFewKeys (obj:any) {
+export function getPostFewKeys (obj:any) {
   return {
     'author': obj.author,
     'id': obj.id,
-    'created': new Date (obj.sr_detail.created_utc).toLocaleString('ru'),
+    'created': new Date (obj.sr_detail.created_utc*1000).toLocaleString('ru', {year: 'numeric', month: 'numeric', day: 'numeric'}),
     'avatar': obj.sr_detail.icon_img || "https://copypast.ru/fotografii/foto_zhivotnih/jivotnye_v_obraze_znamenitostej_0_/jivotnye_v_obraze_znamenitostej_0_027.jpg",
     'title': obj.title,
     'karma': 25,
     'commentsAmount': 25,
-    'isSaved': true,
-    // 'preview': obj.url_overridden_by_dest,
+    'isSaved': false,
+    'isMyPost': false,
+    'isCommented': false,
+    'isSeen': false,
+    'isVisible': true,
+    'preview2': obj.url_overridden_by_dest,
     'url':obj.url,
     'score':obj.score,
-    'preview': obj.thumbnail,
+    'thumbnail': obj.thumbnail,
+    'subreddit':obj.subreddit,
+    'permalink': obj.permalink,
   }
 }
+
+
+
+
+// Our proxy that makes cross origin fetching possible
+// const proxy = "https://cors-anywhere.herokuapp.com/";
+// fetch(`${proxy}https://www.reddit.com/r/javascript/${postType}.json`)
+//   .then(function(res) {
+//     // Return the response in JSON format
+//     return res.json();
+//   })
+//   .then(function(res) {
+//     // We render our posts to the UI in this block
+//     const postsArr = res.data.children;
+//     }

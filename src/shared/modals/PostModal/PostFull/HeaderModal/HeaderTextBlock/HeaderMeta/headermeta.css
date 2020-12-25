@@ -1,5 +1,6 @@
 .headerMetaContainer {
     display: flex;
+    flex-flow: row wrap;
     align-items: center;
     font-size: 14px;
 }

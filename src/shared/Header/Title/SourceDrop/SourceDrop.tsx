@@ -1,27 +1,24 @@
 import styles from "./sourceDrop.css";
-import {Dropdown} from "../../Dropdown";
-import {Icon} from "../../supportingComponents/Icon";
-import {EIcons} from "../../../utils/enums/EIcons";
-import React, {useState} from "react";
-import {Break} from "../../supportingComponents/Break";
-import {Text} from "../../supportingComponents/Text";
-import {MenuButton} from "../../supportingComponents/MenuButton";
+import {Dropdown} from "../../../Dropdown";
+import {Icon} from "../../../supportingComponents/Icon";
+import {EIcons} from "../../../../utils/enums/EIcons";
+import React from "react";
+import {Break} from "../../../supportingComponents/Break";
+import {Text} from "../../../supportingComponents/Text";
+import {MenuButton} from "../../../supportingComponents/MenuButton";
 import {useDispatch, useSelector} from "react-redux";
-import {setSourceAC} from "../../../Store/Posts/postsActions";
-import {IInitialState} from "../../../Store/initialState";
-import {EColors} from "../../../utils/enums/EColors";
+import {setSourceAC} from "../../../../Store/Posts/postsActions";
+import {IInitialState} from "../../../../Store/initialState";
 
 export function SourceDrop() {
-  // const [isOpen, setIsOpen]=useState(false);
   const dispatch = useDispatch();
   const source = useSelector<IInitialState>(state=>state.posts.source)
 
   const handleClick = (source:string)=>{
     dispatch(setSourceAC(source));
-    // setIsOpen(false);
   };
 
-  return (//dropdown гемор с позиционированием -> ручная сборка без него.
+  return (
     <Dropdown
       button={
       <>

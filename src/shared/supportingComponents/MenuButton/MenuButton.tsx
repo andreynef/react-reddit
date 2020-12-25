@@ -8,6 +8,7 @@ import {EIcons} from "../../../utils/enums/EIcons";
 import {Icon} from "../Icon";
 import {Break} from "../Break";
 import {Text} from "../Text";
+import {EColors} from "../../../utils/enums/EColors";
 
 //из библиотеки. (npm i classnames @types/classnames).
 
@@ -19,8 +20,9 @@ interface IButtonProps {
   text: string;
   bold?: boolean;
   icon?: EIcons;
-  onClick: ()=>void;
+  onClick?: ()=>void;
   className?:string;
+  color?:EColors;
 }
 
 type BSizes = 28 | 20 | 16  | 14 | 12 | 10;
@@ -36,6 +38,7 @@ export function MenuButton(props: IButtonProps) {
     onClick,
     icon,
     className,
+    color = EColors.gray99,
   } = props;
   const classes = classNames(//ф из библиотеки кот мерджит названия стилей в одну строку.
     styles[`s${size}`],//в итоге будет 's22', а styles['s22'] будет равен тому стилю кот нужен из файла icon.css
@@ -47,14 +50,14 @@ export function MenuButton(props: IButtonProps) {
   );
 
   return (
-    <button onClick={onClick} className={classes}>
+    <button onClick={onClick} className={classes} style={{display:'flex', alignItems:'center', marginRight:'10px'}}>
       {icon && (
         <>
           <Icon name={icon} size={size}/>
           <Break size={4}/>
         </>
       )}
-      <Text size={size}>{text}</Text>
+      <Text size={size} mobileSize={mobileSize} tabletSize={tabletSize} desktopSize={desktopSize} color={color}>{text}</Text>
     </button>
   );
 }

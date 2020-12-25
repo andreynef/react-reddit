@@ -1,45 +1,107 @@
-import React, {useEffect, useState} from 'react';
+//Прога по генерации шаблонов компонент (установка: npm install -g yo generator-react-ts-component-dir):
+//В консоли набрать: yo react-ts-component-dir NameOfComp ./src/shared. Пример 'yo react-ts-component-dir [component_name] [path] [--styles] [--less] [--sass]'
+
+import React, {useEffect} from 'react';
 import './main.global.css';
 import {hot} from "react-hot-loader/root";
 import {Layout} from "./shared/Layout";
 import {Content} from "./shared/Content";
 import {CardList} from "./shared/CardsList";
 import {Header} from "./shared/Header";
-import {useToken} from "./myHooks/useToken";
-import {PostsContextProvider} from "./shared/context/postsContext";
-import {Provider, useDispatch, useSelector, useStore} from 'react-redux';
-import {createStore} from "redux";
+// import {PostsContextProvider} from "./shared/context/postsContext";
+import {Provider, useSelector} from 'react-redux';
+import {applyMiddleware, createStore} from "redux";
 import {composeWithDevTools} from "redux-devtools-extension";
-import {rootReducer, RootState} from "./Redux/store";
-import {setToken} from "./Redux/actions/actionCreator";
+import {setTokenAC} from "./Store/actions";
+import thunk from "redux-thunk";
+import {rootReducer} from "./Store/rootReducer";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {useIsMounted} from "./myHooks/useIsMounted";
+import {PostModal} from "./shared/modals/PostModal";
+import {AnswerModal} from "./shared/modals/AnswerModal";
+import {AnswerLocalModal} from "./shared/modals/PostModal/PostFull/AnswerForm";
+import {IInitialState} from "./Store/initialState";
+import {CardListBookmark} from "./shared/CardsListBookmark";
+//doc in reactrouter.com
 
-//Прога по генерации шаблонов компонент (установка: npm install -g yo generator-react-ts-component-dir):
-//В консоли набрать: yo react-ts-component-dir BLABLAComp ./src/shared. Пример 'yo react-ts-component-dir [component_name] [path] [--styles] [--less] [--sass]'
 
-const store = createStore(rootReducer, composeWithDevTools());//composeWithDevTools для соединения стора с хромовским расширением Redux чтобы зыркать все что с происходит со стором.
+const store = createStore(//1арг reducer, 2арг action.
+  rootReducer, //reducer
+  composeWithDevTools(//expanded action. Добавляет доп возможности (по умолчанию соединение с хромовским расширением Store)
+    applyMiddleware(thunk),
+  )
+)
 
-function AppComponent() {
-  const [token] = useToken();//достать токен из window.__token__ (записан после авторизации).
-  const dispatch = useDispatch();//вызывается внутри компонента обернутого в <Provider>, поэтому в hot.
-  dispatch(setToken(token));//запрос на установку токена в стор
+function AppComponent() {//макс начало где можно испть токен.
 
+  useEffect(()=>{//походу авторизация кажд раз свежая и поэтому ошибка 401 если сохранять токен в localStorage.
+    //---------либо------
+    // const token = localStorage.getItem('reddit_token') || window.__token__;
+    // if(token) {
+    //   console.log('window token:',window.__token__);
+    //   store.dispatch(setTokenAC(token));//при монтаже - установка токена в стор.
+    //   localStorage.setItem('reddit_token', token)
+    // }
+    //---------либо------
+    // store.dispatch(setTokenAC('712161124719-hbTeTZ8YsiSKCEKq4QTW3ZX5O8XkKA'));
+    //---------либо------
+    const token = window.__token__;//'undefined' or '712161124719-hbTeTZ8YsiSKCEKq4QTW3ZX5O8XkKA'
+    console.log('window.__token__:',window.__token__)
+    if(token!=='undefined'){
+      store.dispatch(setTokenAC(token));
+    }
+  },[])
+
+  const [isMounted, setIsMounted] = React.useState(false);
+  useEffect(()=> {
+    setIsMounted(true);
+  }, [])
   return (
-      <Layout>
-        <Header/>
-        <Content>
-          <PostsContextProvider>
-            <CardList/>
-          </PostsContextProvider>
-        </Content>
-      </Layout>
+    <Provider store={store}>
+      {isMounted && (//только на клиенте тк на сервере браузера нет. Гибрид через Static router итд.
+        <BrowserRouter>
+
+          <Layout>
+            <Header/>
+            <Content>
+              {/*<Route exact path={"/"}>*/}
+              {/*   <CardList/>*/}
+              {/*</Route>*/}
+              {/*<Route path={"/auth/"}>*/}
+              {/*   <CardList/>*/}
+              {/*</Route>*/}
+              {/*<Route path={["/saved"]}>*/}
+              {/*  <CardListBookmark/>*/}
+              {/*</Route>*/}
+              {/*<Route path={'/seen'}>*/}
+              {/*  <CardListBookmark/>*/}
+              {/*</Route>*/}
+              {/*<Route path={'/commented'}>*/}
+              {/*  <CardListBookmark/>*/}
+              {/*</Route>*/}
+              {/*<Route path={'/myposts'}>*/}
+              {/*  <CardListBookmark/>*/}
+              {/*</Route>*/}
+            </Content>
+            <Route path={'/post/:id'}>
+              <PostModal/>
+            </Route>
+            {/*<Route exact path={"/post/:id"}*/}
+            {/*       render={(props) =>*/}
+            {/*         <PostModal*/}
+            {/*           item={itemsArr.find(item => item.id === props.match.params.id)}//фильтр того айди из сущ списка. Роутер передает проп match.params*/}
+            {/*         />*/}
+            {/*       }*/}
+            {/*/>*/}
+          </Layout>
+        </BrowserRouter>
+      )}
+    </Provider>
   );
 }
 
 export const App = hot(()=>// HOC. Если используются Hooks, тобишь UseState итд
-  <Provider store={store}>
     <AppComponent/>
-  </Provider>
-
 );
 // export const App = hot(AppComponent);//если не используются Hooks.
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './menuDropList.css';
-import {GenericList} from "../../../../../utils/GenericList";
+import {GenericList} from "../../../utils/GenericList";
 
 export function MenuDropListOld() {
 

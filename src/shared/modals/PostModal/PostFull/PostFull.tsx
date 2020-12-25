@@ -1,41 +1,54 @@
-import React, {useEffect, useRef, useState} from 'react';
-import styles from './Cardmodal.css';
+import React, {useEffect, useRef} from 'react';
+import styles from './postFull.css';
 import {ActionsPanel} from "./ActionsPanel.tsx";
 import {SortingPanel} from "./SortingPanel.tsx";
 import {ModeratorDelete} from "./ModeratorDelete";
 import {HeaderModal} from "./HeaderModal";
 import {MainBodyModal} from "./MainBodyModal";
-import {ExitButtonModal} from "./ExitButtonModal";
 import {CommentsList} from "./CommentsFullModal";
-import {Break} from "../../supportingComponents/Break";
-import {CommentFormContainer} from "../CommentFormContainer/CommentFormContainer";
-import {Portal} from "../../../utils/Portal";
+import {Break} from "../../../supportingComponents/Break";
+import {CommentFormContainer} from "../../CommentFormContainer/CommentFormContainer";
+import {hiddenBodyScroll, visibleBodyScroll} from "../../../../utils/react/scrollBlocker";
+import {useHistory } from 'react-router-dom';
+import {useOutsideClick} from "../../../../myHooks/useOutsideClick";
+import {ExitButtonModal} from "./ExitButtonModal";
 
-interface ICardModal {
-  onClose:()=>void;
-  id?: string;
-}
+export function PostFull() {
 
-export function CardModal({onClose, id}:ICardModal) {
+  useEffect(()=>{//блокиратор скролла <body>. Render - on, unRender - off.
+    // disableBodyScroll()// disableBodyScroll({ savePosition: true }) для сохранения позиции (импю для меню)
+    hiddenBodyScroll()
+    console.log('scroll blocked')
+    return ()=>{
+      // enableBodyScroll()
+      visibleBodyScroll()
+      console.log('scroll unlocked')
+    }
+  },[])
+
+  //--------для клика снаружи----------
+  const history = useHistory();
+  const ref = useRef<HTMLDivElement>(null);
+  useOutsideClick(ref, ()=>{history.push('/')});
+  //-----------------------------------
 
   return (
-    <Portal
-      onClose={onClose}
-      children={
-        <>
-          <ExitButtonModal onClose={onClose}/>
-          <HeaderModal/>
-          <MainBodyModal/>
-          <div style={{borderTop: '1px solid var(--grayD9)'}} />
-          <ActionsPanel postId={'233'} votedPercentage={55} commentsCount={22}/>
-          <CommentFormContainer/>
-          <SortingPanel/>
-          <div style={{borderTop: '1px solid var(--grayD9)'}}/>
-          <Break size={40}/>
-          <CommentsList/>
-          <ModeratorDelete/>
-        </>
-      }
-      />
+    <section className={styles.postFullBackside}>
+      <div className={styles.postFullContainer} ref={ref}>
+        <HeaderModal/>
+        <MainBodyModal/>
+        <Break size={20} top/>
+        <div style={{borderTop: '1px solid var(--grayD9)'}} />
+        <ActionsPanel/>
+        <Break size={12} top/>
+        <CommentFormContainer/>
+        <SortingPanel/>
+        <div style={{borderTop: '1px solid var(--grayD9)'}}/>
+        <Break size={40}/>
+        <CommentsList/>
+        <ModeratorDelete/>
+        <ExitButtonModal onClose={()=>history.push('/')}/>
+      </div>
+    </section>
   )
 }

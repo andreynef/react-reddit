@@ -6,13 +6,15 @@
   --green: #a4cc33;
   --whiteLightness: 100%;
   /*--white: hsl(0, 0%, var(--whiteLightness));*/
-  --white: #FFF;
+  --white: #ffffff;
   /*--grayF4: hsl(0, 0%, calc(var(--whiteLightness)- 4%));*/
   --grayF4: #F4F4F4;
   /*--grayF3: hsl(0, 0%, calc(var(--whiteLightness)- 5%));*/
   --grayF3: #F3F3F3;
   /*--grayEC: hsl(0, 0%, calc(var(--whiteLightness)- 7%));*/
   --grayEC: #ECECEC;
+  /*--grayD9: hsl(0, 0%, calc(var(--whiteLightness)- 15%));*/
+  --grayE5: #E5E5E5;
   /*--grayD9: hsl(0, 0%, calc(var(--whiteLightness)- 15%));*/
   --grayD9: #D9D9D9;
   /*--grayC4: hsl(0, 0%, calc(var(--whiteLightness)- 23%));*/
@@ -55,6 +57,11 @@ button {
   border: 0;
   background-color: transparent;
   cursor: pointer;
+  outline:none;
+}
+
+h2 {
+  line-height: 28px;
 }
 
 /* полоса прокрутки (скроллбар) */

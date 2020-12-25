@@ -1,45 +1,66 @@
-import React, {useContext} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import styles from './cardlist.css';
-import {Card} from "./Card";
-import {EmptyCard} from "./EmptyCard";
-import {FaceHmm} from "./FaceHmm";
 import {GenericList} from "../../utils/GenericList";
-import {postsContext} from "../context/postsContext";
-import {addRandomId} from "../../utils/react/generateRandomId";
+import {Card} from "./Card";
+import {CircleLoader} from "../img/CircleLoader";
+import {useDispatch, useSelector} from "react-redux";
+import {IPost, postListRequestThunk} from "../../Store/Posts/postsActions";
+import {IInitialState} from "../../Store/initialState";
 
 export function CardList() {
+  const list = useSelector<IInitialState,IPost[]>(state => state.posts.list);
+  const searchInput = useSelector<IInitialState,string>(state => state.searchInput);
+  const isLoading = useSelector<IInitialState,boolean>(state => state.posts.isLoading);
+  const dispatch = useDispatch();
+  const searchedList = list.filter(item=>item.title.includes(`${searchInput}`))
+  const bottomEl = useRef<HTMLDivElement>(null);
 
-  const listTemplate = [
-      {author:'Pupkin Who', date: '10/10/2020', avatar: 'url1', title: 'some title1', karma: 255, commentsAmount: 2, isSaved: false},
-      {author:'Pupkin Why', date: '10/10/2020', avatar: 'url2', title: 'some title2', karma: 234, commentsAmount: 3, isSaved: true},
-      {author:'Pupkin What', date: '10/10/2020', avatar: 'url3', title: 'some title3', karma: 46, commentsAmount: 4, isSaved: true},
-      {author:'Pupkin Where', date: '10/10/2020', avatar: 'url4', title: 'some title4', karma: 56756, commentsAmount: 5, isSaved: false},
-      {author:'Pupkin When', date: '10/10/2020', avatar: 'url5', title: 'some title5', karma: 67867766, commentsAmount: 6, isSaved: true},
-    ].map(addRandomId)//к кажд обьекту массива будет добавлен id вида id: 6r26er235re
-
-  const {list} = useContext(postsContext);
-
-  const listVary = list?list:listTemplate
-
-  const cardsForGenericList = listVary.map((item:any)=>(
-      {
-        id:item.id,
-        children: <Card item={item}/>,
+  useEffect(()=>{//хук по проверке достижения днища.
+    const observer = new IntersectionObserver((entries)=>{
+      if (entries[0].isIntersecting){//наблюдаемый элемент лежащий в позиции [0] находится в зоне видимости.
+        dispatch(postListRequestThunk())
+        console.log('loading more');
       }
-    ));
+    },{
+      rootMargin:'50px',//расстояние от дна окна.
+    });
+
+    if(bottomEl.current){//если bottomEl отрендерен - наблюдать
+      observer.observe(bottomEl.current)
+    }
+    return ()=>{//затирка старого слушателя т.к. далее рендер нового элемента и соотв нов слуш.
+      if(bottomEl.current){
+        observer.unobserve(bottomEl.current)
+      }
+    }
+  },[])
 
   return (
+
     <ul className={styles.cardList}>
-      {listVary.length === 0 && (
-        <>
-          <EmptyCard/>
-          <EmptyCard/>
-          <EmptyCard/>
-          <EmptyCard/>
-          <FaceHmm/>
-        </>
+
+      {list.length === 0 && !isLoading  &&(//--------------!!!!!!!!!!
+        <div role={'alert'} style={{textAlign:'center'}}>
+          Нет ни одного поста
+        </div>
       )}
-      {listVary.length !==0 && <GenericList list={cardsForGenericList}/>}
+
+      <GenericList list={searchedList.map((item)=>(
+        {
+          id:item.id,
+          children: <Card item={item}/>,
+          className:styles.card
+        }
+      ))
+      }/>
+
+      {isLoading && <div style={{textAlign:'center'}}><CircleLoader/></div>}
+
+      <div ref={bottomEl}/>
+
     </ul>
   )
 }
+
+
+

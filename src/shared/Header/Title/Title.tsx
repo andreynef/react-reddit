@@ -1,13 +1,12 @@
 import React from 'react';
-import styles from './thread.css';
+import styles from './title.css';
+import {SourceDrop } from './SourceDrop';
 import {useSelector} from "react-redux";
 import {IInitialState} from "../../../Store/initialState";
-import {PostsSourceDrop} from "./PostsSourceDrop";
-import {Break} from "../../supportingComponents/Break";
 
-export function Thread() {
-  // const isPrivate = useSelector<IInitialState, boolean>(state => state.isPrivate);
-  const isPrivate = true;
+export function Title() {
+
+  const isPrivate = useSelector<IInitialState, boolean>(state => state.isPrivate);
 
   return (
     <div className={styles.threadContainer}>
@@ -16,6 +15,7 @@ export function Thread() {
           {isPrivate?'Личный кабинет':'Дискуссии'}
         </h1>
       </div>
+      {!isPrivate && <SourceDrop/>}
     </div>
   );
 }

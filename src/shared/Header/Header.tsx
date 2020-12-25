@@ -1,35 +1,27 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import styles from './header.css';
-import {ThreadTitle} from "./ThreadTitle";
-import {SortBlock} from "../SortBlock";
 import {SearchGroup} from "./SearchGroup";
-
-
+import {SortBlock} from "../SortBlock";
+import {Title} from "./Title";
+import {useSelector} from "react-redux";
+import {IInitialState} from "../../Store/initialState";
 
 export function Header() {
 
+  const isPrivate = useSelector<IInitialState, boolean>(state => state.isPrivate);
+
   return (
-    <header className={styles.headerContainer}>
+    <header>
+      <div className={styles.topContainer}>
         <SearchGroup />
-        <ThreadTitle/>
-        {/*<SortBlock/>*/}
+        <Title/>
+      </div>
+      {isPrivate && <SortBlock/>}
     </header>
   );
 }
 
 
-// -----------
-//func Header
-// const {Consumer} = tokenContext;// вариант чер Consumer и в рендере <Consumer>{(what)=><Component what={what}>}<Consumer/>
-// const token = useContext(tokenContext);//вариант чер хук
-//
-//render
-// <Consumer>
-//   {(contextttt)=>(
-//     <UserBlock context={contextttt}/>
-//   )}
-// </Consumer>
 
-// -------------------
 
 

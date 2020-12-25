@@ -1,8 +1,8 @@
 import React, {useEffect, useRef} from 'react';
 import styles from './answerForm.css';
-import {useOutsideClick} from "../../../../myHooks/useOutsideClick";
-import {preventDefault} from "../../../../utils/react/preventDefault";
-import {stopPropagation} from "../../../../utils/react/stopPropagation";
+import {useOutsideClick} from "../../../../../myHooks/useOutsideClick";
+import {preventDefault} from "../../../../../utils/react/preventDefault";
+import {stopPropagation} from "../../../../../utils/react/stopPropagation";
 
 interface IAnswerForm {
   name:string

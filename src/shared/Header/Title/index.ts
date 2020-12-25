@@ -1,1 +1,1 @@
-export * from './Thread';
+export * from './Title';

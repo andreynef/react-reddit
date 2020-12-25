@@ -44,7 +44,20 @@ module.exports = {
             {
                 test: GLOBAL_CSS_REGEXP,
                 use: ["сss-loader"]
-            }
+            },
+            // {
+            //     test: /\.(png|jpe?g|gif)$/i,
+            //     use: [
+            //         {
+            //             loader: 'file-loader',
+            //         },
+            //     ],
+            // },
+            // {
+            //     test: /\.svg$/,
+            //     use: ['@svgr/webpack'],
+            // },
+
         ]
     },
     optimization: {

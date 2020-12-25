@@ -6,10 +6,16 @@
 }
 
 .container h2 {
-    font-size: 20px;
+    font-size: 14px;
     color: var(--black);
     padding: 0;
     margin: 0;
     margin-bottom: 9px;
     font-weight: normal;
+}
+
+@media all and (min-width: 763px) {
+    .container h2 {
+        font-size: 20px;
+    }
 }

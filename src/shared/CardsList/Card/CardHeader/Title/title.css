@@ -4,17 +4,27 @@
     font-weight: normal;
     padding: 0;
     margin: 0;
+    /*-----3 точки-----*/
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    width: 90%;
 }
 
-.titleContainer a {/*строка с 3мя точками вконце*/
+.titleContainer button {/*строка с 3мя точками вконце*/
     overflow: hidden;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     display: -webkit-box;
 }
 
-.titleContainer a:hover {
+/*.titleContainer button:hover {*/
+/*    color: var(--orange);*/
+/*}*/
+.titleContainer:hover *{
     color: var(--orange);
+    cursor:pointer;
 }
 
 @media all and (min-width: 1024px) {

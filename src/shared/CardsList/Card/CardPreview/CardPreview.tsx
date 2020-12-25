@@ -5,21 +5,30 @@ import {Break} from "../../../supportingComponents/Break";
 import {Text} from "../../../supportingComponents/Text";
 import {Icon} from "../../../supportingComponents/Icon";
 import {EIcons} from "../../../../utils/enums/EIcons";
+import {Link} from "react-router-dom";
+import {openPostThunk} from "../../../../Store/Comments/commentsActions";
+import {useDispatch} from "react-redux";
 
 interface PreviewProps {
   isSaved?: boolean;
   id?: string;
+  preview?: string;
+  postId:string;
+  subreddit:string;
 }
 
-export function CardPreview({isSaved, id}:PreviewProps) {
+export function CardPreview({isSaved, id, preview, postId, subreddit}:PreviewProps) {
+  const dispatch = useDispatch();
+
   return (
-    <div className={styles.previewContainer}>
+    <Link to={`/post/${postId}`} className={styles.previewContainer} onClick={()=>dispatch(openPostThunk(subreddit,postId))}>
       <img className={styles.previewImg}
-           src={'https://i.pinimg.com/originals/fd/a9/ec/fda9ec08daa846f974323a22ee0b48ea.jpg'}
+           src={preview}
            alt={'previewPic'}
       />
       {/*<div style={{backgroundColor:'yellow', position:'absolute', top:'45%', left:'30%', padding: '5px'}}>id : {id}</div>*/}
-      {isSaved &&
+
+      {isSaved && //если сохрен то отображается маркер.
         <div  className={styles.marker}>
           <div className={styles.markerPartOne}>
             <Icon name={EIcons.save} size={10}/>
@@ -31,6 +40,6 @@ export function CardPreview({isSaved, id}:PreviewProps) {
           </div>
         </div>
       }
-    </div>
+    </Link>
   );
 }

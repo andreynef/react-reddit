@@ -1,17 +1,18 @@
 import React from 'react';
 import styles from './sortingPanel.css';
-import {ArrowIcon} from "../../../Icons";
-import {Dropdown} from "../../../Dropdown";
+import {Dropdown} from "../../../../Dropdown";
+import {Icon} from "../../../../supportingComponents/Icon";
+import {EIcons} from "../../../../../utils/enums/EIcons";
 
 export function SortingPanel() {
   return (
     <div className={styles.container}>
-      Сортировать по:
-      <Dropdown//Контейнер с логикой дропа
+      {/*Сортировать по:*/}
+      <Dropdown
         button={
           <button className={styles.button}>
-            <span>Лучшее</span>
-              <ArrowIcon/>
+            <span>Лучшие</span>
+              <Icon name={EIcons.arrow} />
           </button>
         }
       >

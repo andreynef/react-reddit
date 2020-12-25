@@ -22,7 +22,7 @@
 }
 
 .textContainer {
-    padding: 5px 20px 0px 20px;
+    padding-left: 20px;
 }
 
 .textContainer span:first-child + div{/*поймал элемент находящийся в дочерне-рендеруемом элементе и сместил его положение вперед */

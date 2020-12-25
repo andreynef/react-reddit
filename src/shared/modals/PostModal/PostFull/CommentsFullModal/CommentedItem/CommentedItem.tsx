@@ -1,37 +1,48 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styles from './commenteditem.css';
 import {HeaderMeta} from "../../HeaderModal/HeaderTextBlock/HeaderMeta";
-import {Break} from "../../../../supportingComponents/Break";
-import {Icon} from "../../../../supportingComponents/Icon";
-import {EIcons} from "../../../../../utils/enums/EIcons";
+import {Break} from "../../../../../supportingComponents/Break";
+import {Icon} from "../../../../../supportingComponents/Icon";
+import {EIcons} from "../../../../../../utils/enums/EIcons";
 import {CommentActionsPanel} from "../../CommentActionsPanel.tsx";
+import {IComment} from "../../../../../../Store/Comments/commentsActions";
 
-export function CommentItem() {
 
-  const [isModalOpened, setIsModalOpened] = useState(false);
-  const [isAnswerOpened, setAnswerOpened] = useState(false);
+export interface ICommentItem {
+  item:IComment
+}
 
+export function CommentItem({item}:ICommentItem) {
 
   return (
-    <li className={styles.item}>
-      <div className={styles.visualThreadContainer}>
-        <div className={styles.arrows}>
-          <Icon name={EIcons.arrowFilled}/>
-          <Break size={8} top/>
-          <Icon name={EIcons.arrowFilled}/>
+    <>
+      {item.body &&(
+        <div className={styles.item}>
+          <div className={styles.visualThreadContainer}>
+            <div className={styles.arrows}>
+              <Icon name={EIcons.arrowFilled}/>
+              <Break size={8} top/>
+              <Icon name={EIcons.arrowFilled}/>
+            </div>
+            <Break size={20} top/>
+            <div className={styles.line}/>
+          </div>
+          <div className={styles.textContainer}>
+            <HeaderMeta name={item.author} subreddit={item.subreddit} avatar={item.avatar} created={item.created}/>
+            <p>
+              {item.body}
+            </p>
+            <CommentActionsPanel item={item}/>
+            {/*рекурсия если есть такие же субелементы*/}
+            {
+              item.replies &&
+              item.replies.data.children[0].data.body &&
+              <CommentItem item={item.replies.data.children[0].data}/>
+            }
+          </div>
         </div>
-        <Break size={20} top/>
-        <div className={styles.line}/>
-      </div>
-      <div className={styles.textContainer}>
-        <HeaderMeta name={"Sender's Name"} theme={"sender's theme"} isComment/>
-        <p className={styles.text}>Сторонники тоталитаризма в науке будут объективно рассмотрены соответствующими инстанциями. Лишь реплицированные с зарубежных источников, современные исследования будут описаны максимально подробно.
-        </p>
-        <CommentActionsPanel/>
-
-        {/*{commentOnComment}*/}
-      </div>
-    </li>
+      )}
+    </>
 
   );
 }

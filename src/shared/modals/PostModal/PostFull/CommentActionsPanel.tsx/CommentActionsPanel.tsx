@@ -1,35 +1,21 @@
 import React, {useState} from 'react';
 import styles from './CommentActionsPanel.css';
-import {EIcons} from "../../../../utils/enums/EIcons";
-import {CommentModal} from "../../CommentModal";
-import {AnswerLocalModal} from "../AnswerForm";
-import {MenuButton} from "../../../supportingComponents/MenuButton";
-import {CommentForm} from "../CommentForm";
+import {EIcons} from "../../../../../utils/enums/EIcons";
+import {MenuButton} from "../../../../supportingComponents/MenuButton";
+import {AnswerModal} from "../../../AnswerModal";
+import {ICommentItem} from "../CommentsFullModal/CommentedItem";
 
-interface IFactNActionsPanel {
-  postId?: string;
-  votedPercentage?: number;
-  commentsCount?: number;
-  isComment?: boolean;
-}
-
-export function CommentActionsPanel({postId, votedPercentage, commentsCount, isComment=false}:IFactNActionsPanel) {
-
-  const [isModalOpened, setIsModalOpened] = useState(false);
+export function CommentActionsPanel({item}:ICommentItem) {
+  const [isAnswerOpen, setIsAnswerOpen] = useState(false);
 
   return (
     <div className={styles.actionsContainer}>
-      <MenuButton text={'Ответить'} onClick={()=>setIsModalOpened(true)} icon={EIcons.comment} className={styles.actionButton}/>
-      <MenuButton text={'Ответить'} onClick={()=>setIsModalOpened(true)} icon={EIcons.comment} className={styles.actionButton}/>
-      <MenuButton text={'Ответить'} onClick={()=>setIsModalOpened(true)} icon={EIcons.comment} className={styles.actionButton}/>
-
-      {isModalOpened &&
-      <CommentModal
-        onClose={()=>{setIsModalOpened(false)}}
-        name={'"User from props"'}/>
-      }
+      <MenuButton text={'Ответить'} onClick={()=>setIsAnswerOpen(true)} icon={EIcons.comment} className={styles.actionButton}/>
+      <MenuButton text={'Поделиться'}  icon={EIcons.share} className={styles.actionButton}/>
+      <MenuButton text={'Пожаловаться'} icon={EIcons.warning} className={styles.actionButton}/>
+        {isAnswerOpen &&(
+          <AnswerModal item={item} onClose={()=>setIsAnswerOpen(false)}/>
+        )}
     </div>
   );
 }
-
-

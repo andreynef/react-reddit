@@ -1,61 +1,103 @@
-.sortContainer {
-    border:1px solid red;
+.sortBlockContainerMobile {
+    margin-bottom:20px;
 }
-
-.sortBlockDiscussionButton {
+.button {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    width:100%;
     background-color: var(--white);
     padding: 11px 20px;
     border-radius: 7px;
     /*border: 1px solid #000000;*/
+    justify-content: space-between;
+}
+.button *{
+    color: var(--orange);
+    fill:var(--orange);
+}
+.buttonText {
     display: flex;
-    /*justify-content: space-between;*/
     align-items: center;
 }
-
-.sortBlockDiscussionButton svg path{
-    fill: var(--orange);
+.dropdownWrapper {
+    position: relative;
+    /*border: 1px solid #000000;*/
 }
-
-.arrowIcon {
-    transform: rotate(180deg);
-    line-height: 0;
-    margin: auto 0;/*выравнивание блочн эл по вертикали*/
-}
-
-.dropdown {
-    border-radius: 3px;
+.dropdownContainer {
+    position:absolute;
+    left: 0;
+    top: 0;
+    border-radius: 0 0 7px 7px;
     background-color: var(--white);
-    /*border: 1px solid red;*/
-    padding-top: 7px;
-    margin-top: -7px;
+    z-index: 10;
+    width: 100%;
+}
+.dropdownButtonsContainer {
+    padding: 0 20px;
+}
+.actionButton {
+    padding: 12px 0;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    border-bottom: 1px solid #ECECEC;
+    width: 100%;
+    outline: none;
+}
+.actionButton:last-child {
+    border-bottom: none;
+}
+.actionButton:first-child {
+    border-top: 1px solid #ECECEC;
+}
+.actionButton:hover span, .actionButton:hover svg path{
+    color: var(--orange);
+    fill: var(--orange);
+    cursor: pointer;
 }
 
-.closeButton {
+.dropdownCloseButton {
     background-color: var(--grayD9);
     padding: 12px 23px;
     border-radius: 0 0 3px 3px;
     width: 100%;
 }
+.closeButton:hover {
+    background-color: var(--grayC4);
+}
 
+.sortBlockContainerDesktop {
+    display: none;
+    width:100%;/*ибо это 4й элемент хеадер контейнера кот расположен в row*/
+    justify-content: center;
+    /*padding-top:20px;*/
+}
+
+.body {
+    display:flex;
+    flex-flow: row nowrap;
+}
+
+.link {
+    padding-bottom: 15px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    border-bottom: 2px solid var(--grayD9);
+}
+.link:hover span {
+    color: var(--orange);
+}
+
+.active {
+    border-bottom: 2px solid var(--orange);
+}
 @media all and (min-width: 1024px) {
-    .sortBlockDiscussionButton {
-        background-color: unset;
-        /*padding: 11px 20px;*/
-        /*border-radius: 7px;*/
-        /*!*border: 1px solid #000000;*!*/
-        /*display: flex;*/
-        /*!*justify-content: space-between;*!*/
+    .sortBlockContainerMobile {
+        display: none;
     }
-
-    .sortBlockDiscussionButton svg{
-        width: 14px;
-        height: 16px;
+    .sortBlockContainerDesktop {
+        display: flex
     }
-
-    .sortContainer *{/*все что в этом контейнере*/
-        background-color: unset;
-        font-size: 20px;
-    }
-
-
 }

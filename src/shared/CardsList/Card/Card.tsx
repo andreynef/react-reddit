@@ -1,28 +1,24 @@
 import React from 'react';
-import styles from './card.css';
 import {CardControls} from "./CardControls";
 import {CardHeader} from "./CardHeader";
 import {CardPreview} from "./CardPreview";
+import {IPost} from "../../../Store/Posts/postsActions";
 
 interface ICardProps {
-  item: {
-    id: string,
-    author: string,
-    date: string,
-    avatar: string,
-    title: string,
-    karma: number,
-    commentsAmount: number,
-    isSaved: boolean,
-  }
+  item:IPost
 }
 
 export function Card({item}:ICardProps) {
+
   return (
-      <div className={styles.card}>
-        <CardHeader commentsAmount={item.commentsAmount} title={item.title} date={item.date} author={item.author}/>
-        <CardPreview isSaved={item.isSaved} id={item.id}/>
-        <CardControls commentsAmount={item.commentsAmount}/>
-      </div>
+    <>
+      {item.isVisible &&(
+        <>
+          <CardHeader commentsAmount={item.commentsAmount} title={item.title} created={item.created} author={item.author} avatar={item.avatar} postId={item.id} subreddit={item.subreddit}/>
+          <CardPreview isSaved={item.isSaved} id={item.id} preview={item.thumbnail} postId={item.id} subreddit={item.subreddit}/>
+          <CardControls commentsAmount={item.commentsAmount} score={item.score}/>
+        </>
+      )}
+    </>
   );
 }

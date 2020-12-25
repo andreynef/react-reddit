@@ -1,13 +1,13 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {IinitialState} from "../initialState";
+import {IInitialState} from "../initialState";
 import {timeoutTestThunk} from "./timeoutTestActions";
 import {TestComponent} from "./TestComponent";
 
 export function TestButton() {
 
   const dispatch = useDispatch();
-  const timeout = useSelector<IinitialState,boolean>(state => state.timeout);
+  const timeout = useSelector<IInitialState,boolean>(state => state.timeout);
 
   const handleClick = () => {
     dispatch(timeoutTestThunk());
