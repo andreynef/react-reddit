@@ -3,8 +3,14 @@ import ReactDOM from 'react-dom/server';
 import { indexHtmlTemplate } from './indexHtmlTemplate';
 import {App} from "../App";
 import {getAccessTokenRequest} from "../Reddit/Reddit";
+
+
+const PORT = process.env.PORT || 3000;
+
 const cors = require("cors");
 const app = express();//инициализация. Теперь app это instance нашего приложения
+
+
 
 app.use(cors());
 // app.use(cors({
@@ -39,6 +45,6 @@ app.get('*', (req,res) =>{// при обращении на url '/' выдает
   );
 });
 
-app.listen(3000, ()=>{
-    console.log('file server.js is speaking : "Server started on http://localhost:3000"');
+app.listen(PORT, ()=>{
+    console.log(`file server.js is speaking : "Server started on http://localhost:${PORT}"`);
 });

@@ -909,6 +909,7 @@ var server_1 = __importDefault(__webpack_require__(27));
 var indexHtmlTemplate_1 = __webpack_require__(28);
 var App_1 = __webpack_require__(29);
 var Reddit_1 = __webpack_require__(21);
+var PORT = process.env.PORT || 3000;
 var cors = __webpack_require__(198);
 var app = express_1.default(); //инициализация. Теперь app это instance нашего приложения
 app.use(cors());
@@ -937,8 +938,8 @@ app.get('/auth', function (req, res) {
 app.get('*', function (req, res) {
     res.send(indexHtmlTemplate_1.indexHtmlTemplate(server_1.default.renderToString(App_1.App())));
 });
-app.listen(3000, function () {
-    console.log('file server.js is speaking : "Server started on http://localhost:3000"');
+app.listen(PORT, function () {
+    console.log("file server.js is speaking : \"Server started on http://localhost:" + PORT + "\"");
 });
 
 
