@@ -21,7 +21,7 @@ export function getAccessTokenRequest(req) {
     `grant_type=authorization_code&code=${req.query.code}&redirect_uri=${process.env.NODE_ENV='development' ? process.env.REDIRECT_URI : REDIRECT_URI_PROD}`,
     {//подробности настройки в доке axios (github.com/axios/axios)
       auth: {
-        username:process.env.CLIENT_ID,
+        username:process.env.NODE_ENV='development' ? process.env.CLIENT_ID : CLIENT_ID_PROD,
         password:process.env.NODE_ENV='development' ? process.env.SECRET: SECRET_PROD,
       },
       headers: {'Content-type':'application/x-www-form-urlencoded'}//указ тип дабы не было ошибок
