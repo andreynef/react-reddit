@@ -139,3 +139,7 @@ export const App = hot(()=>// HOC. Если используются Hooks, то
 // <Icon size={20}>Label2</Icon>
 // <Break size={8} top/>
 // <Icon size={20} mobileSize={10}>Label3</Icon>
+
+
+
+

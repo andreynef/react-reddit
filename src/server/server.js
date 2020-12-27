@@ -4,7 +4,6 @@ import { indexHtmlTemplate } from './indexHtmlTemplate';
 import {App} from "../App";
 import {getAccessTokenRequest} from "../Reddit/Reddit";
 
-
 const PORT = process.env.PORT || 3000;
 
 const cors = require("cors");
