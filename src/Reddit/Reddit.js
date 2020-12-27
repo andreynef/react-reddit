@@ -12,7 +12,7 @@ export function getRedditAuthUrl () {
   return `https://www.reddit.com/api/v1/authorize?client_id=${process.env.CLIENT_ID}&response_type=${TYPE}&state=random_string&redirect_uri=${process.env.REDIRECT_URI}&duration=${DURATION}&scope=${SCOPE}`
 }
 
-//используется в server.js для запроса в Reddit на получение access_token.
+//используется в server.js для запроса в Reddit на получение access_token..
 export function getAccessTokenRequest(req) {
   return axios.post(
     'https://www.reddit.com/api/v1/access_token',
