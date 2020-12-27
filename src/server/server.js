@@ -3,13 +3,19 @@ import ReactDOM from 'react-dom/server';
 import { indexHtmlTemplate } from './indexHtmlTemplate';
 import {App} from "../App";
 import {getAccessTokenRequest} from "../Reddit/Reddit";
+import compression from "compression";
+import helmet from "helmet";
 
 const PORT = process.env.PORT || 3000;
 
 const cors = require("cors");
 const app = express();//инициализация. Теперь app это instance нашего приложения
-
-
+// if(process.env.NODE_ENV){
+  app.use(compression());
+  app.use(helmet({
+    contentSecurityPolicy:false,//откл заголовки безопастности. Далее нужно настроить.
+  }));
+// }
 
 app.use(cors());
 // app.use(cors({

@@ -22,6 +22,14 @@ setupDevtool = () =>{
     if (IS_PROD) return false;
 }
 
+function getEntry(){
+    if (IS_PROD) {
+        return [path.resolve(__dirname, '../src/client/index.jsx')]
+    }
+    return [path.resolve(__dirname, '../src/client/index.jsx'),//после этого модуля добавляем строку ниже
+      'webpack-hot-middleware/client?path=http://localhost:3001/static/__webpack_hmr']//js код кот б добавлен в index.jsx в конец. Path указывает путь до нового сервера. Настройка запросов к серверу кот б отдавать данные с hmr.
+}
+
 module.exports = {
     mode: NODE_ENV ? NODE_ENV : 'development',
     resolve: {
@@ -30,10 +38,7 @@ module.exports = {
             'react-dom': IS_DEV ? '@hot-loader/react-dom' : 'react-dom',//реакт дом заменяется на пропатченный реакт дом, чтобы обновляться на горячую.(дев режим)
         }
     },
-    entry: [
-        path.resolve(__dirname, '../src/client/index.jsx'),//после этого модуля добавляем строку ниже
-        'webpack-hot-middleware/client?path=http://localhost:3001/static/__webpack_hmr',//js код кот б добавлен в index.jsx в конец. Path указывает путь до нового сервера. Настройка запросов к серверу кот б отдавать данные с hmr.
-        ],
+    entry: getEntry(),
     output: {
         path: path.resolve(__dirname, '../dist/client'),
         filename: 'client.js',
