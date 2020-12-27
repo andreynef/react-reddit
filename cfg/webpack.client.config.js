@@ -17,7 +17,7 @@ const COMMON_PLUGINS = [
     ),
 ];
 
-setupDevtool = () =>{
+function setupDevtool(){
     if (IS_DEV) return 'eval';
     if (IS_PROD) return false;
 }
