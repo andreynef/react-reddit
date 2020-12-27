@@ -11,7 +11,7 @@
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
     "dev": "cross-env NODE_ENV=development CLIENT_ID=vjlerDRAsrT9zA SECRET=RD2BDYxwYPnDsixEt7GmfPQbXutB5Q REDIRECT_URI=http://localhost:3000/auth node ./bin/dev.js",
     "test": "jest",
-    "start": "env CLIENT_ID=MEc6w5cll39TCA SECRET=dFDQOPkRwOhJML4YTDKG5v7vDJb0rg REDIRECT_URI=https://react-reddit-app-andrey.herokuapp.com/auth node ./dist/server/server.js"
+    "start": "cross-env CLIENT_ID=MEc6w5cll39TCA SECRET=dFDQOPkRwOhJML4YTDKG5v7vDJb0rg REDIRECT_URI=https://react-reddit-app-andrey.herokuapp.com/auth node ./dist/server/server.js"
   },
   "author": "",
   "license": "ISC",
