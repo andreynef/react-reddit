@@ -12,7 +12,7 @@ import {Header} from "./shared/Header";
 import {Provider, useSelector} from 'react-redux';
 import {applyMiddleware, createStore} from "redux";
 import {composeWithDevTools} from "redux-devtools-extension";
-import {setTokenAC} from "./Store/actions";
+import {saveTokenThunk, setTokenAC} from "./Store/actions";
 import thunk from "redux-thunk";
 import {rootReducer} from "./Store/rootReducer";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
@@ -35,20 +35,20 @@ const store = createStore(//1арг reducer, 2арг action.
 function AppComponent() {//макс начало где можно испть токен.
 
   useEffect(()=>{//походу авторизация кажд раз свежая и поэтому ошибка 401 если сохранять токен в localStorage.
-    //---------либо------
+  //---------либо------
     // const token = localStorage.getItem('reddit_token') || window.__token__;
     // if(token) {
     //   console.log('window token:',window.__token__);
     //   store.dispatch(setTokenAC(token));//при монтаже - установка токена в стор.
     //   localStorage.setItem('reddit_token', token)
     // }
-    //---------либо------
+  //---------либо------
     // store.dispatch(setTokenAC('712161124719-hbTeTZ8YsiSKCEKq4QTW3ZX5O8XkKA'));
-    //---------либо------
+  //---------либо------
     const token = window.__token__;//'undefined' or '712161124719-hbTeTZ8YsiSKCEKq4QTW3ZX5O8XkKA'
     console.log('window.__token__:',window.__token__)
     if(token!=='undefined'){
-      store.dispatch(setTokenAC(token));
+      store.dispatch(saveTokenThunk(token));
     }
   },[])
 

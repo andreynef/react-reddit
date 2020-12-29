@@ -23,6 +23,12 @@ export const setTokenAC: ActionCreator<SetTokenAction> = (token) => ({
   token,
 });
 
+export const saveTokenThunk = (token:string):ThunkAction<void, IInitialState, unknown, Action>=>(dispatch, getState)=> {//типизация из документации
+  dispatch(setTokenAC(token));
+  // axios...
+}
+
+
 //----------discussion or private room---------------------
 
 export const TOGGLE_ROOM = 'TOGGLE_ROOM'
