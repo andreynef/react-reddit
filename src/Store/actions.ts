@@ -23,8 +23,8 @@ export const setTokenAC: ActionCreator<SetTokenAction> = (token) => ({
   token,
 });
 
-export const saveTokenThunk = ():ThunkAction<void, IInitialState, unknown, Action>=>(dispatch, getState)=> {//типизация из документации
-  // dispatch(setTokenAC('dfdf'));
+export const saveTokenThunk = (token:string):ThunkAction<void, IInitialState, unknown, Action>=>(dispatch, getState)=> {//типизация из документации
+  dispatch(setTokenAC(token));
   // axios...
 }
 
