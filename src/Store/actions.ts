@@ -23,8 +23,8 @@ export const setTokenAC: ActionCreator<SetTokenAction> = (token) => ({
   token,
 });
 
-export const saveTokenThunk = (token:string):ThunkAction<void, IInitialState, unknown, Action>=>(dispatch, getState)=> {//типизация из документации
-  dispatch(setTokenAC(token));
+export const saveTokenThunk = ():ThunkAction<void, IInitialState, unknown, Action>=>(dispatch, getState)=> {//типизация из документации
+  // dispatch(setTokenAC('dfdf'));
   // axios...
 }
 
@@ -47,7 +47,7 @@ export const UPDATE_SEARCH = 'UPDATE_SEARCH'
 
 export type UpdateSearchAction = {
   type: typeof UPDATE_SEARCH ;
-  value:string;
+  value: string;
 }
 
 export const updateSearchAC: ActionCreator<UpdateSearchAction> = (value) => ({

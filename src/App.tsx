@@ -48,6 +48,7 @@ function AppComponent() {//макс начало где можно испть т
     const token = window.__token__;//'undefined' or '712161124719-hbTeTZ8YsiSKCEKq4QTW3ZX5O8XkKA'
     console.log('window.__token__:',window.__token__)
     if(token!=='undefined'){
+      // @ts-ignore
       store.dispatch(saveTokenThunk(token));
     }
   },[])
